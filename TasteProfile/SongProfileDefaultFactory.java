@@ -1,5 +1,6 @@
 package TasteProfile;
 
+import Implementation.SongProfileImpl;
 
 /**
 * TasteProfile/SongProfileDefaultFactory.java .

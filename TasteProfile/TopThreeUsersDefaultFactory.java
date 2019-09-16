@@ -1,5 +1,6 @@
 package TasteProfile;
 
+import Implementation.TopThreeUsersImpl;
 
 /**
 * TasteProfile/TopThreeUsersDefaultFactory.java .

@@ -1,5 +1,6 @@
 package TasteProfile;
 
+import Implementation.SongCounterImpl;
 
 /**
 * TasteProfile/SongCounterDefaultFactory.java .

@@ -1,5 +1,6 @@
 package TasteProfile;
 
+import Implementation.TopThreeSongsImpl;
 
 /**
 * TasteProfile/TopThreeSongsDefaultFactory.java .

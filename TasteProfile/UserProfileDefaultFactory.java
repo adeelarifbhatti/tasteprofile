@@ -1,5 +1,6 @@
 package TasteProfile;
 
+import Implementation.UserProfileImpl;
 
 /**
 * TasteProfile/UserProfileDefaultFactory.java .
