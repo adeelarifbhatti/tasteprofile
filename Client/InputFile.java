@@ -11,7 +11,7 @@ public class InputFile {
 	public String argument1;
 	public String argument2;
 	Profiler profile;
-	public void fileRead() throws FileNotFoundException{
+		public Profiler fileRead() throws FileNotFoundException{
 		
 			FileInputStream inputStream = new FileInputStream("input.txt");
 			sc = new Scanner(inputStream, "UTF-8");
@@ -31,15 +31,11 @@ public class InputFile {
 			    	profile.getTimesPlayed(argument1);
 			    else if (method=="getTopThreeUsersBySong")
 			    	profile.getTopThreeUsersBySong(argument1);
-			   
-			    	
-			    		
-			    }
-				
-			
-		
-		
+			}
+			return profile;
+	
 	}
+	
 	/*public static void main(String[] args) throws FileNotFoundException {
 		InputFile input= new InputFile();
 		input.fileRead();
