@@ -21,8 +21,8 @@ public class ProfileClient {
 		//InputFile inputFile = profileR.fileRead();
 		InputFile inputFile = new InputFile();
 		
-		inputFile.fileRead(profileRef);
-		System.out.println(profileRef);
+		System.out.println("This is from ProfileClient " + inputFile.fileRead(profileRef));
+		//System.out.println(i);
 		
 		
 		}
