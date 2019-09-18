@@ -2,7 +2,7 @@ package Implementation;
 
 import TasteProfile.UserCounter;
 
-public class UserCounterImpl extends UserCounter{
+public class UserCounterImpl extends UserCounter implements Comparable<UserCounterImpl>{
 
 	/**
 	 * 
@@ -12,8 +12,18 @@ public class UserCounterImpl extends UserCounter{
 		
 	}
 	public UserCounterImpl(String user_id, int songid_play_time) {
-		user_id = this.user_id;
-		songid_play_time = this.songid_play_time;
-		
+		this.user_id = user_id;
+		this.songid_play_time = songid_play_time;
+	}
+	
+	@Override
+	public int compareTo(UserCounterImpl u) {
+		if(this.songid_play_time < u.songid_play_time) {
+			return 1;
+		}
+		else if (this.songid_play_time == u.songid_play_time){
+			return 0;
+		}
+		return -1;
 	}
 }

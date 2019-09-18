@@ -21,6 +21,8 @@ public class Server {
 			int testint = servant.getTimesPlayed("SOAAADD12AB018A9DD");
 			System.out.println("testint is: " + testint);
 			
+			int threeUsertest =servant.getTopThreeUsersBySong("SOAAADD12AB018A9DD");
+			
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);
 			 
