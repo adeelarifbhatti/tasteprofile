@@ -18,11 +18,14 @@ public class ProfileClient {
 		String name =  "Profile";
 		Profiler profileRef = ProfilerHelper.narrow(ncRef.resolve_str(name));
 		
+		/*Call the getTimesPlayed method from server*/
+		int timesPlayed = profileRef.getTimesPlayed("SOAAADD12AB018A9DD");
+		System.out.println("Song SOAAADD12AB018A9DD played: " + timesPlayed);
 		//InputFile inputFile = profileR.fileRead();
-		InputFile inputFile = new InputFile();
+		//InputFile inputFile = new InputFile();
 		
-		inputFile.fileRead(profileRef);
-		System.out.println(profileRef);
+		//inputFile.fileRead(profileRef);
+		//System.out.println(profileRef);
 		
 		
 		}

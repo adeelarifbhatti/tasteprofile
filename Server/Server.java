@@ -16,20 +16,22 @@ public class Server {
 			ORB orb = ORB.init(args, null);
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
-			
+
 			Servant servant = new Servant();
-			org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant);
-			Profiler href=ProfilerHelper.narrow(ref);
+			int testint = servant.getTimesPlayed("SOAAADD12AB018A9DD");
+			System.out.println("testint is: " + testint);
 			
-			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-			
-			String name ="Profile";
-			NameComponent path[] = ncRef.to_name(name);
-			ncRef.rebind(path, href);
-			orb.run();
-			
-		} catch(Exception e) {
+			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
+			 href=ProfilerHelper.narrow(ref);
+			 
+			 org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+			 NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+			 
+			 String name ="Profile"; NameComponent path[] = ncRef.to_name(name);
+			 ncRef.rebind(path, href); orb.run();
+			 
+
+		} catch (Exception e) {
 			System.err.println("Error:" + e.getMessage());
 			e.printStackTrace(System.out);
 		}
