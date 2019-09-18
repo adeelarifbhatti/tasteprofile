@@ -26,8 +26,8 @@ public class ProfileClient {
 		
 		//inputFile.fileRead(profileRef);
 		//System.out.println(profileRef);
-		
-		
+
+
 		}
 		catch(Exception e) {
 			System.out.println("Profiler Client Error"+e.getMessage());

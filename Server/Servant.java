@@ -10,7 +10,9 @@ import TasteProfile.UserProfile;
 public class Servant extends ProfilerPOA {
 	
 	FileInputStream inputStream;
+	int totalCount;
 
+	
 	@Override
 	public int getTimesPlayed(String song_id) { 
 

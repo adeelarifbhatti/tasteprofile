@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import TasteProfile.Profiler;
+import TasteProfile.UserProfile;
 
 public class InputFile {
 	private Scanner sc;
@@ -35,8 +36,7 @@ public class InputFile {
 			    	profile.getTopThreeUsersBySong(argument1);
 			}*/
 			result = profile.getTimesPlayed("SOAAADD12AB018A9DD");
-			System.out.println(result);
-			
+						
 			
 		} catch(Exception e) {
 			System.err.println("Error:" + e.getMessage());
