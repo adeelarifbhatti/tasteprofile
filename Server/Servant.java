@@ -18,9 +18,9 @@ public class Servant extends ProfilerPOA {
 
 		try {
 			System.out.println("hello there");
-//			String filePath = new File(".").getAbsolutePath();
-//			System.out.println(filePath);
-			Scanner sc = new Scanner(new File(".../Server/train_triplets_test.txt"));
+			String filePath = new File(".").getAbsolutePath();
+			System.out.println(filePath);
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
