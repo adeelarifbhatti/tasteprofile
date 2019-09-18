@@ -10,10 +10,12 @@ public class InputFile {
 	public String method;
 	public String argument1;
 	public String argument2;
+	int result;
 	Profiler profile;
-		public Profiler fileRead() throws FileNotFoundException{
-		
-			FileInputStream inputStream = new FileInputStream("input.txt");
+		public int fileRead(Profiler profile) {
+			this.profile=profile;
+		 try {
+			/*FileInputStream inputStream = new FileInputStream("input.txt");
 			sc = new Scanner(inputStream, "UTF-8");
 			int lineNumber= 0;
 			while (sc.hasNextLine()) {
@@ -28,11 +30,19 @@ public class InputFile {
 			    if (method=="getTimesPlayedByUser")
 			    	profile.getTimesPlayedByUser(argument1,argument2);
 			    else if (method=="getTimesPlayed")
-			    	profile.getTimesPlayed(argument1);
-			    else if (method=="getTopThreeUsersBySong")
+			    	 result = profile.getTimesPlayed(argument1);
+			     else if (method=="getTopThreeUsersBySong")
 			    	profile.getTopThreeUsersBySong(argument1);
-			}
-			return profile;
+			}*/
+			result = profile.getTimesPlayed("SOAAADD12AB018A9DD");
+			System.out.println(result);
+			
+			
+		} catch(Exception e) {
+			System.err.println("Error:" + e.getMessage());
+			e.printStackTrace(System.out);
+		}
+		 return result;
 	
 	}
 	

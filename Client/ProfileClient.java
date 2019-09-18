@@ -15,12 +15,15 @@ public class ProfileClient {
 		ORB orb = ORB.init(args,null);
 		org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 		NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-		String name =  "Profiler";
+		String name =  "Profile";
 		Profiler profileRef = ProfilerHelper.narrow(ncRef.resolve_str(name));
 		
-		//InputFile inputFile = profileRef.fileRead();
+		//InputFile inputFile = profileR.fileRead();
 		InputFile inputFile = new InputFile();
-		profileRef= inputFile.fileRead();
+		
+		inputFile.fileRead(profileRef);
+		System.out.println(profileRef);
+		
 		
 		}
 		catch(Exception e) {

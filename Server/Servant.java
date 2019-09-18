@@ -28,8 +28,9 @@ public class Servant extends ProfilerPOA {
 				totalCount=totalCount+i;
 				System.out.println("totalCount is " + totalCount);
 			}
-		sc.close();
+		
 	}
+		sc.close();
 		
 		return totalCount;
 		

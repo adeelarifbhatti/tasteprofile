@@ -24,7 +24,7 @@ public class Server {
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 			
-			String name ="Profiler";
+			String name ="Profile";
 			NameComponent path[] = ncRef.to_name(name);
 			ncRef.rebind(path, href);
 			orb.run();
