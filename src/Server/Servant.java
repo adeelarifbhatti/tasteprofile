@@ -49,8 +49,32 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			int totalCount= 0;
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] parts = line.split("\t");
+				String part1=parts[0];
+				String part2=parts[1];
+				int part3=Integer.parseInt(parts[2]);
+
+				if(user_id.equals(part1)&&song_id.equals(part2)){
+					totalCount=part3;
+
+				}
+			}
+			sc.close();
+			
+			return totalCount;
+		}
+			catch (FileNotFoundException e) {
+				System.out.println(new File(".").getAbsolutePath());
+				System.out.println("no file");
+				e.printStackTrace();
+			}
+
+		return -1;
 	}
 
 	@Override

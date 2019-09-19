@@ -9,7 +9,6 @@ public class InputFile {
 	public String method;
 	public String argument1;
 	public String argument2;
-	int result;
 	Profiler profile;
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
@@ -29,16 +28,16 @@ public class InputFile {
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
-			    	profile.getTimesPlayedByUser(argument1,argument2);
+			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
 			    	System.out.println("Method getTimesPlayedByUser and Result is " +  result);
 			    	
 			   }
-			   else if (method.equals("getTimesPlayed")) {
+			    else if (method.equals("getTimesPlayed")) {
 			    	int result= profile.getTimesPlayed(argument1);
 			    	 System.out.println("Method getTimesPlayedByUser and Result is " +  result);
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
-			    	profile.getTopThreeUsersBySong(argument1);
+			    	int result=profile.getTopThreeUsersBySong(argument1);
 			    	System.out.println("Method getTopThreeUsersBySong and Result is " +  result);
 			    }
 			}
