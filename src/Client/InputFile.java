@@ -1,23 +1,22 @@
 package Client;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.Scanner;
 import TasteProfile.Profiler;
-import TasteProfile.UserProfile;
+
 
 public class InputFile {
-	private Scanner sc;
 	public String method;
 	public String argument1;
 	public String argument2;
 	int result;
 	Profiler profile;
-		public int fileRead(Profiler profile) {
+		public void fileRead(Profiler profile) {
 			this.profile=profile;
-		 try {
-			/*FileInputStream inputStream = new FileInputStream("input.txt");
-			sc = new Scanner(inputStream, "UTF-8");
+			
+		try {
+				
+			Scanner sc = new Scanner(new File("input.txt"));
 			int lineNumber= 0;
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -27,29 +26,33 @@ public class InputFile {
 				argument1 = parts[1];
 			    argument2 = parts.length > 2 ? parts[2] : null;
 			   
-			    System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
-			    if (method=="getTimesPlayedByUser")
+			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
+		
+			   if (method.equals("getTimesPlayedByUser")) {
 			    	profile.getTimesPlayedByUser(argument1,argument2);
-			    else if (method=="getTimesPlayed")
-			    	 result = profile.getTimesPlayed(argument1);
-			     else if (method=="getTopThreeUsersBySong")
+			    	System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    	
+			   }
+			   else if (method.equals("getTimesPlayed")) {
+			    	int result= profile.getTimesPlayed(argument1);
+			    	 System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    }
+			    else if (method=="getTopThreeUsersBySong") {
 			    	profile.getTopThreeUsersBySong(argument1);
-			}*/
-			result = profile.getTimesPlayed("SOAAADD12AB018A9DD");
-						
+			    	System.out.println("Method getTopThreeUsersBySong and Result is " +  result);
+			    }
+			}
+			sc.close();
+		}
+
 			
-		} catch(Exception e) {
+			catch(Exception e) {
 			System.err.println("Error:" + e.getMessage());
 			e.printStackTrace(System.out);
 		}
-		 return result;
-	
-	}
-	
-	/*public static void main(String[] args) throws FileNotFoundException {
-		InputFile input= new InputFile();
-		input.fileRead();
-	}
-	*/
 
+	
+	
+
+		}
 }

@@ -16,31 +16,28 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayed(String song_id) { 
 
-		try {
-			System.out.println("hello there");
-			String filePath = new File(".").getAbsolutePath();
-			System.out.println(filePath);
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
-			int totalCount= 0;
-			while (sc.hasNextLine()) {
-				String line = sc.nextLine();
-				String[] parts = line.split("\t");
-				int comp = song_id.compareTo(parts[0]);
-				if(comp == 0){
-					Integer i = Integer.valueOf(parts[2]);
-					totalCount=totalCount+i;
-					//System.out.println("totalCount is " + totalCount);
+			try {
+				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+				int totalCount= 0;
+				while (sc.hasNextLine()) {
+					String line = sc.nextLine();
+					String[] parts = line.split("\t");
+					String part1=parts[0];
+					if(song_id.equals(part1)){
+						Integer i = Integer.valueOf(parts[2]);
+						totalCount=totalCount+i;
+
+					}
 				}
+				sc.close();
+				return totalCount;
 			}
-			sc.close();
-			return totalCount;
-		}
-		catch (FileNotFoundException e) {
-			System.out.println(new File(".").getAbsolutePath());
-			System.out.println("no file");
-			e.printStackTrace();
-		}
-		return -1;
+			catch (FileNotFoundException e) {
+				System.out.println(new File(".").getAbsolutePath());
+				System.out.println("no file");
+				e.printStackTrace();
+			}
+			return -1;
 	}
 
 

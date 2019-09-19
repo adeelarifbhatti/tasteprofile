@@ -17,10 +17,7 @@ public class Server {
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
 
-			Servant servant = new Servant();
-			int testint = servant.getTimesPlayed("SOAAADD12AB018A9DD");
-			System.out.println("testint is: " + testint);
-			
+		     Servant servant = new Servant();
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);
 			 
