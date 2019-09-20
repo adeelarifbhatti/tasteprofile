@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import TasteProfile.ProfilerPOA;
+import TasteProfile.TopThreeSongs;
+import TasteProfile.TopThreeUsers;
 import TasteProfile.UserProfile;
 
 public class Servant extends ProfilerPOA {
@@ -78,15 +80,15 @@ public class Servant extends ProfilerPOA {
 	}
 
 	@Override
-	public int getTopThreeUsersBySong(String song_id) {
+	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int getTopThreeSongsByUser(String song_id) {
+	public TopThreeSongs getTopThreeSongsByUser(String song_id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

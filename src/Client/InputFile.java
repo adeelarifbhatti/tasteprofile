@@ -3,6 +3,8 @@ package Client;
 import java.io.File;
 import java.util.Scanner;
 import TasteProfile.Profiler;
+import TasteProfile.TopThreeSongs;
+import TasteProfile.TopThreeUsers;
 
 
 public class InputFile {
@@ -29,16 +31,20 @@ public class InputFile {
 		
 			   if (method.equals("getTimesPlayedByUser")) {
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
-			    	System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    	OutputFile.outputWriter(method, argument2, argument1, result);
 			    	
 			   }
 			    else if (method.equals("getTimesPlayed")) {
 			    	int result= profile.getTimesPlayed(argument1);
-			    	 System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
-			    	int result=profile.getTopThreeUsersBySong(argument1);
-			    	System.out.println("Method getTopThreeUsersBySong and Result is " +  result);
+			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    }
+			    else if (method=="getTopThreeSongsByUser") {
+			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
 			    }
 			}
 			sc.close();
