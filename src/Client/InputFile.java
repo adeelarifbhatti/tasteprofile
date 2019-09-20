@@ -34,11 +34,15 @@ public class InputFile {
 			   }
 			    else if (method.equals("getTimesPlayed")) {
 			    	int result= profile.getTimesPlayed(argument1);
-			    	 System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
 			    	int result=profile.getTopThreeUsersBySong(argument1);
-			    	System.out.println("Method getTopThreeUsersBySong and Result is " +  result);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    }
+			    else if (method=="getTopThreeSongsByUser") {
+			    	int result=profile.getTopThreeSongsByUser(argument1);
+			    	OutputFile.outputWriter(method, argument1, argument2, result);
 			    }
 			}
 			sc.close();

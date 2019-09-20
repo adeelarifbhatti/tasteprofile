@@ -12,8 +12,8 @@ public class OutputFile {
 		
 		try {
 			
-			Writer writer = new FileWriter("output.txt");
-			writer.write("Method is " + method + " 1stArgument is " +argument1 +"2nd Argument is " +argument2 + "and the Result is " + result);
+			Writer writer = new FileWriter("output.txt",true);
+			writer.write("Method is " + method + " 1stArgument is " + argument1 + " 2nd Argument is " + argument2 + " and the Result is " + result+"\n");
 			writer.close();
 		}
 
