@@ -12,7 +12,8 @@ public class TopThreeUsersImpl extends TopThreeUsers{
 		
 	}
 	public TopThreeUsersImpl(TasteProfile.UserCounter topThreeUsers[]) {
-		topThreeUsers=this.topThreeUsers;
+		System.out.println("inside topimpl");
+		this.topThreeUsers=topThreeUsers;
 		
 	}
 

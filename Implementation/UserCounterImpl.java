@@ -16,6 +16,7 @@ public class UserCounterImpl extends UserCounter implements Comparable<UserCount
 		this.songid_play_time = songid_play_time;
 	}
 	
+//create this method so we can sort the arraylist
 	@Override
 	public int compareTo(UserCounterImpl u) {
 		if(this.songid_play_time < u.songid_play_time) {
