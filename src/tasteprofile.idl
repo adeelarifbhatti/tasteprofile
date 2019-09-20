@@ -51,10 +51,10 @@ module TasteProfile
     		long getTimesPlayedByUser(in string user_id, in string song_id);
 
         	/* Returns the top three users played a given song */ 
-		TopThreeUsers getTopThreeUsersBySong(String song_id);
+		TopThreeUsers getTopThreeUsersBySong(in string song_id);
 
 	    	/* Returns the top three songs played  by the given user */
-		TopThreeSongs getTopThreeSongsByUser(String user_id);
+		TopThreeSongs getTopThreeSongsByUser(in string user_id);
   
   	};
 
