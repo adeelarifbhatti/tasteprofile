@@ -29,7 +29,7 @@ public class InputFile {
 		
 			   if (method.equals("getTimesPlayedByUser")) {
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
-			    	System.out.println("Method getTimesPlayedByUser and Result is " +  result);
+			    	OutputFile.outputWriter(method, argument2, argument1, result);
 			    	
 			   }
 			    else if (method.equals("getTimesPlayed")) {
