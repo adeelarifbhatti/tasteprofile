@@ -12,6 +12,8 @@ public class InputFile {
 	public String argument1;
 	public String argument2;
 	Profiler profile;
+
+
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
 			
@@ -26,17 +28,26 @@ public class InputFile {
 				String method = parts[0];
 				argument1 = parts[1];
 			    argument2 = parts.length > 2 ? parts[2] : null;
+
 			   
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
+				  	Timer time=new Timer();
+				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
-			    	OutputFile.outputWriter(method, argument2, argument1, result);
+			    	time.setFinish(System.nanoTime());
+			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 			    	
 			   }
 			    else if (method.equals("getTimesPlayed")) {
+			    	
+			    	Timer time=new Timer();
+			    	time.setStart(System.nanoTime());
 			    	int result= profile.getTimesPlayed(argument1);
-			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    	time.setFinish(System.nanoTime());
+
+			    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
