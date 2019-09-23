@@ -46,10 +46,11 @@ public class OutputFile {
 public static void outputWriter_topthreeusers(String method, String argument1, TopThreeUsers topThreeUsers, long totalTime) {
 		
 	try {
-		Writer writer = new FileWriter("TopThreeUsers.txt",true);
+
 		if (topThreeUsers!=null ){
+		Writer writer = new FileWriter("TopThreeUsers.txt",true);
 		for (int i =0; i<3; i++)
-		writer.write("TOPTHREEUSERS" + argument1 + " Played  " + topThreeUsers.topThreeUsers[i].user_id + " times " +topThreeUsers.topThreeUsers[i].songid_play_time+" By User "+ totalTime +"ms\n" );
+		writer.write("TOPTHREEUSERS for Song" + argument1 + " are Users  " + topThreeUsers.topThreeUsers[i].user_id + " times played " +topThreeUsers.topThreeUsers[i].songid_play_time+" By User "+ totalTime +"ms\n" );
 		writer.close();
 		}
 	}
