@@ -26,6 +26,7 @@ public class InputFile {
 				String method = parts[0];
 				argument1 = parts[1];
 			    argument2 = parts.length > 2 ? parts[2] : null;
+			    long start = System.nanoTime();
 			   
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
@@ -36,7 +37,9 @@ public class InputFile {
 			   }
 			    else if (method.equals("getTimesPlayed")) {
 			    	int result= profile.getTimesPlayed(argument1);
-			    	OutputFile.Writer_TimesPlayed(method, argument1, result);
+			    	long finish = System.nanoTime();
+			    	long totalTime=(start-finish)/1000000;
+			    	OutputFile.Writer_TimesPlayed(method, argument1, result, totalTime);
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);

@@ -11,12 +11,12 @@ import TasteProfile.TopThreeUsers;
 public class OutputFile {
 	
 
-	public static void Writer_TimesPlayed(String method, String argument1, int result) {
+	public static void Writer_TimesPlayed(String method, String argument1, int result, long totalTime) {
 		
 		try {
 			
 			Writer writer = new FileWriter("output.txt",true);
-			writer.write("Song " + argument1 + " Played  " + result + " times \n");
+			writer.write("Song " + argument1 + " Played  " + result + " times " + totalTime +"ms\n" );
 			writer.close();
 		}
 
