@@ -47,7 +47,19 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public UserProfile getUserProfile(String user_id) {
 		serverPause();
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 

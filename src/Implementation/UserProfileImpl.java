@@ -13,10 +13,10 @@ public class UserProfileImpl extends UserProfile{
 		
 	}
 	public UserProfileImpl(String user_id, int total_play_count, TasteProfile.SongCounter songs[], TasteProfile.TopThreeSongs top_three_songs ) {
-		user_id = this.user_id;
-		total_play_count = this.total_play_count;
-		songs = this.songs;
-		top_three_songs = this.top_three_songs;
+		this.user_id = user_id;
+		this.total_play_count = total_play_count;
+		this.songs = songs;
+		this.top_three_songs =top_three_songs;
 		
 	}
 
