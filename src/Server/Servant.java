@@ -88,7 +88,9 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
+		serverPause();
 		try {
+			
 			UserCounterImpl userCounter;
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			ArrayList <UserCounterImpl> userList = new ArrayList<UserCounterImpl>();
