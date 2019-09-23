@@ -31,12 +31,12 @@ public class InputFile {
 		
 			   if (method.equals("getTimesPlayedByUser")) {
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
-			    	OutputFile.outputWriter(method, argument2, argument1, result);
+			    	//OutputFile.outputWriter(method, argument2, argument1, result);
 			    	
 			   }
 			    else if (method.equals("getTimesPlayed")) {
 			    	int result= profile.getTimesPlayed(argument1);
-			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    	OutputFile.Writer_TimesPlayed(method, argument1, result);
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
