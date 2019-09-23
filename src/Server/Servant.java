@@ -17,6 +17,7 @@ public class Servant extends ProfilerPOA {
 	
 	@Override
 	public int getTimesPlayed(String song_id) { 
+		serverPause();
 
 			try {
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
@@ -45,12 +46,14 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public UserProfile getUserProfile(String user_id) {
+		serverPause();
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
+		serverPause();
 		try {
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
@@ -81,14 +84,24 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
+		serverPause();
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public TopThreeSongs getTopThreeSongsByUser(String song_id) {
+		serverPause();
 		// TODO Auto-generated method stub
 		return null;
+	}
+	private void serverPause() {
+		try {
+			Thread.sleep(80);
+		} catch (InterruptedException e) {
+			System.err.println("InterruptedException: " + e.getMessage());
+			e.printStackTrace(System.out);
+		}
 	}
 
 }
