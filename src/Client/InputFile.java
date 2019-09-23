@@ -50,8 +50,11 @@ public class InputFile {
 			    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
 			    }
 			    else if (method=="getTopThreeUsersBySong") {
+			    	Timer time=new Timer();
+			    	time.setStart(System.nanoTime());
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
-			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    	time.setFinish(System.nanoTime());
+			    	OutputFile.outputWriter_topthreeusers(method, argument1, result, time.timing());
 			    }
 			    else if (method=="getTopThreeSongsByUser") {
 			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
