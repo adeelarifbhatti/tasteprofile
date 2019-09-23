@@ -12,7 +12,7 @@ public class TopThreeUsersImpl extends TopThreeUsers{
 		
 	}
 	public TopThreeUsersImpl(TasteProfile.UserCounter topThreeUsers[]) {
-		topThreeUsers=this.topThreeUsers;
+		this.topThreeUsers=topThreeUsers;
 		
 	}
 
