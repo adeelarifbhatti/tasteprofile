@@ -49,14 +49,14 @@ public class InputFile {
 
 			    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
 			    }
-			    else if (method=="getTopThreeUsersBySong") {
+			    else if (method.equals("getTopThreeUsersBySong")) {
 			    	Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.outputWriter_topthreeusers(method, argument1, result, time.timing());
 			    }
-			    else if (method=="getTopThreeSongsByUser") {
+			    else if (method.equals("getTopThreeSongsByUser")) {
 			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
 			    	OutputFile.outputWriter(method, argument1, argument2, result);
 			    }
