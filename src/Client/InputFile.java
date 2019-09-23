@@ -33,8 +33,11 @@ public class InputFile {
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
+				  	Timer time=new Timer();
+				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
-			    	//OutputFile.outputWriter(method, argument2, argument1, result);
+			    	time.setFinish(System.nanoTime());
+			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 			    	
 			   }
 			    else if (method.equals("getTimesPlayed")) {
