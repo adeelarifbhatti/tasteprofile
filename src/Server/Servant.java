@@ -89,6 +89,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		serverPause();
+		TopThreeUsersImpl result;
 		try {
 			
 			UserCounterImpl userCounter;
@@ -112,13 +113,20 @@ public class Servant extends ProfilerPOA {
 			}
 			sc.close();
 			Collections.sort(userList, new Sorting());
+			if(userList.size()>2) {
 			UserCounterImpl[] topThree = {userList.get(0),userList.get(1),userList.get(2)};
 			/*System.out.println(topThree);
 			System.out.println(userList.get(0));
 			System.out.println(userList.get(1));
 			System.out.println(userList.get(2));*/
-			TopThreeUsersImpl result = new TopThreeUsersImpl(topThree);
+			result = new TopThreeUsersImpl(topThree);
 			return result;
+			}
+			else {
+				UserCounterImpl[] topThree = {};
+				result = new TopThreeUsersImpl(topThree);
+				return result;
+			}
 	
 		}
 			catch (FileNotFoundException e) {

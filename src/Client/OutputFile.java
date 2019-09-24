@@ -47,9 +47,9 @@ public static void outputWriter_topthreeusers(String method, String argument1, T
 		
 	try {
 
-		if (topThreeUsers!=null ){
-		Writer writer = new FileWriter("output.txt",true);
-		for (int i =0; i<3; i++)
+		if (topThreeUsers.topThreeUsers.length>0){
+		Writer writer = new FileWriter("TOPTHRRUSERS.txt",true);
+		for (int i =0; i<topThreeUsers.topThreeUsers.length; i++)
 		writer.write("TOPTHREEUSERS for Song" + argument1 + " are Users  " + topThreeUsers.topThreeUsers[i].user_id + " times played " +topThreeUsers.topThreeUsers[i].songid_play_time+" By User "+ totalTime +"ms\n" );
 		writer.close();
 		}
