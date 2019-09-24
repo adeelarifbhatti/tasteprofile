@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 import Implementation.TopThreeUsersImpl;
+import Implementation.SongCounterImpl;
+import Implementation.TopThreeSongsImpl;
 import Implementation.UserCounterImpl;
 import TasteProfile.ProfilerPOA;
 import TasteProfile.TopThreeSongs;
@@ -138,9 +140,53 @@ public class Servant extends ProfilerPOA {
 	}
 
 	@Override
-	public TopThreeSongs getTopThreeSongsByUser(String song_id) {
+	public TopThreeSongs getTopThreeSongsByUser(String user_id) {
 		serverPause();
-		// TODO Auto-generated method stub
+		TopThreeSongsImpl result;
+		try {
+			
+			SongCounterImpl songCounter;
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] parts = line.split("\t");
+				
+				String part1=parts[1];
+				
+				if(user_id.equals(part1)){
+
+					String part2=parts[0];
+					int part3=Integer.parseInt(parts[2]);
+					songCounter = new SongCounterImpl(part2,part3);
+					songList.add(songCounter);
+					
+				     }
+	
+			}
+			sc.close();
+			Collections.sort(songList, new SongSorting());
+			if(songList.size()>2) {
+			SongCounterImpl[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
+			/*System.out.println(topThree);
+			System.out.println(userList.get(0));
+			System.out.println(userList.get(1));
+			System.out.println(userList.get(2));*/
+			result = new TopThreeSongsImpl(topThree);
+			return result;
+			}
+			else {
+				SongCounterImpl[] topThree = {};
+				result = new TopThreeSongsImpl(topThree);
+				return result;
+			}
+	
+		}
+			catch (FileNotFoundException e) {
+				System.out.println(new File(".").getAbsolutePath());
+				System.out.println("no file");
+				e.printStackTrace();
+			}
 		return null;
 	}
 	private void serverPause() {

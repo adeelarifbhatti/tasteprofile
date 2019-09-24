@@ -57,8 +57,11 @@ public class InputFile {
 			    	OutputFile.outputWriter_topthreeusers(method, argument1, result, time.timing());
 			    }
 			    else if (method.equals("getTopThreeSongsByUser")) {
+			    	Timer time=new Timer();
+			    	time.setStart(System.nanoTime());
 			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
-			    	OutputFile.outputWriter(method, argument1, argument2, result);
+			    	time.setFinish(System.nanoTime());
+			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
 			    }
 			}
 			sc.close();
