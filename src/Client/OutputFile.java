@@ -43,20 +43,28 @@ public class OutputFile {
 	}
 	}
 	
-public static void outputWriter(String method, String argument1, String argument2, TopThreeUsers topThreeUsers) {
+public static void outputWriter_topthreeusers(String method, String argument1, TopThreeUsers topThreeUsers, long totalTime) {
 		
-		try {
-			
-			Writer writer = new FileWriter("output.txt",true);
-			writer.write("Method is " + method + " 1stArgument is " + argument1 + " 2nd Argument is " + argument2 + " and the Result is " + topThreeUsers+"\n");
-			writer.close();
-		}
+	try {
 
-		catch(Exception e) {
-		System.err.println("Error:" + e.getMessage());
-		e.printStackTrace(System.out);
+		if (topThreeUsers.topThreeUsers.length>0){
+		Writer writer = new FileWriter("TOPTHRRUSERS.txt",true);
+		for (int i =0; i<topThreeUsers.topThreeUsers.length; i++)
+		writer.write("TOPTHREEUSERS for Song" + argument1 + " are Users  " + topThreeUsers.topThreeUsers[i].user_id + " times played " +topThreeUsers.topThreeUsers[i].songid_play_time+" By User "+ totalTime +"ms\n" );
+		writer.close();
+		}
 	}
+
+	catch(Exception e) {
+	System.err.println("Error:" + e.getMessage());
+	e.printStackTrace(System.out);
+}
 	}
+
+
+
+
+
 public static void outputWriter(String method, String argument1, String argument2, TopThreeSongs topThreeSongs) {
 	
 	try {

@@ -12,8 +12,8 @@ public class UserCounterImpl extends UserCounter{
 		
 	}
 	public UserCounterImpl(String user_id, int songid_play_time) {
-		user_id = this.user_id;
-		songid_play_time = this.songid_play_time;
+		this.user_id = user_id;
+		this.songid_play_time = songid_play_time;
 		
 	}
 }
