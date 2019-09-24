@@ -19,6 +19,7 @@ public class Servant extends ProfilerPOA {
 	
 	FileInputStream inputStream;
 	int totalCount;
+	SongCache songCache=new SongCache();
 
 	
 	@Override
@@ -26,6 +27,10 @@ public class Servant extends ProfilerPOA {
 		serverPause();
 
 			try {
+				if(songCache.checkSongCache(song_id)) {
+					songCache.getSongCache(song_id);
+				}
+							
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				int totalCount= 0;
 				while (sc.hasNextLine()) {
@@ -39,6 +44,7 @@ public class Servant extends ProfilerPOA {
 					}
 				}
 				sc.close();
+				songCache.setSongCache(song_id,totalCount);
 				return totalCount;
 			}
 			catch (FileNotFoundException e) {
@@ -91,6 +97,9 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		serverPause();
+		if(songCache.checkSongCache(song_id)) {
+			songCache.getSongCache(song_id);
+		}
 		TopThreeUsersImpl result;
 		try {
 			
