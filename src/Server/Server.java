@@ -42,6 +42,16 @@ public class Server {
 //		     System.out.println("getTimesplayed by user 2: " + test2);
 //		     int test1 = servant.getTimesPlayedByUser("8cf21d682f872dbe91296690359af2010e5195ca", "SORYEIJ12A6701E7F8");
 //		     System.out.println("getTimesplayed by user 2: " + test1);
+//		     int test = servant.getTimesPlayedByUser("8cf21d682f872dbe91296690359af2010e5195ca", "SORYEIJ12A6701E7F8");
+//		     System.out.println("getTimesplayed by user: " + test);
+		     TopThreeSongs t3 = servant.getTopThreeSongsByUser("8cf21d682f872dbe91296690359af2010e5195ca");
+		     for (int i = 0; i<t3.topThreeSongs.length; i++) {
+		    	 System.out.println("top 3: " + t3.topThreeSongs[i].song_id);
+		     }
+		     TopThreeSongs t4 = servant.getTopThreeSongsByUser("8cf21d682f872dbe91296690359af2010e5195ca");
+		     for (int i = 0; i<t4.topThreeSongs.length; i++) {
+		    	 System.out.println("top 3: " + t4.topThreeSongs[i].song_id);
+		     }
 		     
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);
