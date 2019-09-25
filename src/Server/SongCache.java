@@ -37,7 +37,7 @@ public class SongCache {
 	}
 	public void setSongCacheTopThree(String song_id, TopThreeUsers topthreeusers) {
 		SongProfileImpl songPrfl = new SongProfileImpl(song_id,topthreeusers);
-		songCache.replace(song_id, songPrfl);
+		songCache.put(song_id, songPrfl);
 
 	
     }
