@@ -19,7 +19,7 @@ public class UserProfileImpl extends UserProfile{
 		this.top_three_songs = top_three_songs;
 		
 	}
-	public UserProfileImpl(String user_id, TasteProfile.TopThreeSongs top_three_songs) {
+	/* Wrong Codepublic UserProfileImpl(String user_id, TasteProfile.TopThreeSongs top_three_songs) {
 
 		this.top_three_songs = top_three_songs;
 		
@@ -41,7 +41,7 @@ public class UserProfileImpl extends UserProfile{
 		this.total_play_count = total_play_count;
 		this.songs=songs;
 		
-	}
+	}*/
 	
 	
 

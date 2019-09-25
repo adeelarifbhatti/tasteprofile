@@ -99,12 +99,14 @@ public class Servant extends ProfilerPOA {
 				}
 			}
 			sc.close();
+			/*
 			ArrayList <SongCounterImpl> songCounter = new ArrayList<SongCounterImpl>();
 			songCount= new SongCounterImpl(song_id, totalCount);
 			songCounter.add(songCount);
 			SongCounterImpl[] song= {songCounter.get(0)};
 			
 			userCache.setuserCacheSongs(user_id,song);
+			*/
 			return totalCount;
 		}
 			catch (FileNotFoundException e) {
@@ -199,7 +201,7 @@ public class Servant extends ProfilerPOA {
 			if(songList.size()>2) {
 			SongCounterImpl[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
 			result = new TopThreeSongsImpl(topThree);
-			userCache.setuserCacheTopThree(user_id, result);
+			/* Wrong Code userCache.setuserCacheTopThree(user_id, result);*/
 			return result;
 			}
 			else {

@@ -14,6 +14,7 @@ public class UserCache {
 	String user_id;
 	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>();
 	
+	
 	public boolean checkuserCache(String user_id) {
 		if(userCache.containsKey(user_id)) {
 			return true;
@@ -52,7 +53,9 @@ public class UserCache {
 		}
 		return null;
     }	
-	public void setuserCache(String user_id, int totalCount) {
+/*	
+ * Wrong Code
+ * public void setuserCache(String user_id, int totalCount) {
 		UserProfileImpl UserPrfl = new UserProfileImpl(user_id, totalCount);
 		userCache.put(user_id, UserPrfl);
 
@@ -67,7 +70,7 @@ public void setuserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) 
 UserProfileImpl UserPrfl = new UserProfileImpl(user_id,songs);
 userCache.put(user_id, UserPrfl);
 
-}
+}*/
 	
 	public UserProfile getUserProfCache(String user_id) {
 		if(userCache.containsKey(user_id)) {
