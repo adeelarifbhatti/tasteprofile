@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import Implementation.UserCounterImpl;
 
-class Sorting implements Comparator<UserCounterImpl> 
+class UserSorting implements Comparator<UserCounterImpl> 
 { 
 	@Override
 	public int compare(UserCounterImpl a, UserCounterImpl u) {

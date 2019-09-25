@@ -132,7 +132,7 @@ public class Servant extends ProfilerPOA {
 	
 			}
 			sc.close();
-			Collections.sort(userList, new Sorting());
+			Collections.sort(userList, new UserSorting());
 			if(userList.size()>2) {
 			UserCounterImpl[] topThree = {userList.get(0),userList.get(1),userList.get(2)};
 			result = new TopThreeUsersImpl(topThree);
