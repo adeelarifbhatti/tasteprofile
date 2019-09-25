@@ -5,6 +5,7 @@ import java.util.Scanner;
 import TasteProfile.Profiler;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
+import TasteProfile.UserProfile;
 
 
 public class InputFile {
@@ -12,7 +13,7 @@ public class InputFile {
 	public String argument1;
 	public String argument2;
 	Profiler profile;
-
+	boolean cache =  true;
 
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
@@ -33,6 +34,18 @@ public class InputFile {
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
+				   if (cache) {
+						ClientCache clientCache= new ClientCache();
+				
+					if(clientCache.checkLocalCache(argument1)) {
+					UserProfile	uProfile=profile.getUserProfile(argument1);
+				  	Timer time=new Timer();
+				   time.setStart(System.nanoTime());
+				   int result= uProfile.total_play_count;
+				   time.setFinish(System.nanoTime());
+			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+					}
+				   }
 				  	Timer time=new Timer();
 				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
@@ -57,6 +70,17 @@ public class InputFile {
 			    	OutputFile.outputWriter_topthreeusers(method, argument1, result, time.timing());
 			    }
 			    else if (method.equals("getTopThreeSongsByUser")) {
+				   if (cache) {
+					ClientCache clientCache= new ClientCache();
+					if(clientCache.checkLocalCache(argument1) && cache) {
+					UserProfile	uProfile=profile.getUserProfile(argument1);
+					Timer time=new Timer();
+			    	time.setStart(System.nanoTime());
+			    	TopThreeSongs result=uProfile.top_three_songs;
+			    	time.setFinish(System.nanoTime());
+			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
+					}
+				   }
 			    	Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
 			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
