@@ -31,7 +31,7 @@ public class SongCache {
 	
 	public void setSongCache(String song_id, int totalCount) {
 				SongProfileImpl songPrfl = new SongProfileImpl(song_id, totalCount);
-				songCache.replace(song_id, songPrfl);
+				songCache.put(song_id, songPrfl);
 
 			
 	}

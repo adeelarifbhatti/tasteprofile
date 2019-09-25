@@ -29,6 +29,7 @@ public class Servant extends ProfilerPOA {
 				if(songCache.checkSongCache(song_id)) {
 					return songCache.getSongCache(song_id);
 				}
+			
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				int totalCount= 0;
 				while (sc.hasNextLine()) {
@@ -44,6 +45,7 @@ public class Servant extends ProfilerPOA {
 				sc.close();
 				songCache.setSongCache(song_id,totalCount);
 				return totalCount;
+			
 			}
 			catch (FileNotFoundException e) {
 				System.out.println(new File(".").getAbsolutePath());
