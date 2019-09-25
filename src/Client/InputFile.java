@@ -19,6 +19,7 @@ public class InputFile {
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
 			
+			
 		try {
 				
 			Scanner sc = new Scanner(new File("input.txt"));
@@ -30,9 +31,7 @@ public class InputFile {
 				String method = parts[0];
 				argument1 = parts[1];
 			    argument2 = parts.length > 2 ? parts[2] : null;
-
-			   
-			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
+			    System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
 				  

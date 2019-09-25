@@ -21,6 +21,7 @@ public class UserCache {
 		else 
 			return false;
 	}
+	
 	public int getuserCache(String user_id) {
 		
 		if(userCache.containsKey(user_id)) {
@@ -30,20 +31,7 @@ public class UserCache {
 		}
 	return 0;
 	}
-	
-	public void setuserCache(String user_id, int totalCount) {
-				UserProfileImpl UserPrfl = new UserProfileImpl(user_id, totalCount);
-				userCache.put(user_id, UserPrfl);
-
-			
-	}
-	
-	public void setuserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) {
-		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,songs);
-		userCache.put(user_id, UserPrfl);
-		
-	}
-	
+	/* May be wrong
 	public int getuserCacheSongs(String user_id,String song_id) {
 		// This needs fixing
 		 if(userCache.get(user_id).equals(user_id) && userCache.get(song_id).equals(song_id)){
@@ -53,13 +41,9 @@ public class UserCache {
 		 return -1;
 		
 	}
+	*/
 		
-	public void setuserCacheTopThree(String user_id, TopThreeSongs topthreesongs) {
-		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,topthreesongs);
-		userCache.put(user_id, UserPrfl);
 
-	
-    }
 	public TopThreeSongs getuserCacheTopThree(String user_id) {
 		if(userCache.containsKey(user_id)) {
 			if(!userCache.get(user_id).top_three_songs.equals(null)) { 
@@ -67,8 +51,23 @@ public class UserCache {
 			}
 		}
 		return null;
-		
-    }
+    }	
+	public void setuserCache(String user_id, int totalCount) {
+		UserProfileImpl UserPrfl = new UserProfileImpl(user_id, totalCount);
+		userCache.put(user_id, UserPrfl);
+
+	
+	}
+	public void setuserCacheTopThree(String user_id, TopThreeSongs topthreesongs) {
+		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,topthreesongs);
+		userCache.put(user_id, UserPrfl);
+	}
+
+public void setuserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) {
+UserProfileImpl UserPrfl = new UserProfileImpl(user_id,songs);
+userCache.put(user_id, UserPrfl);
+
+}
 	
 	public UserProfile getUserProfCache(String user_id) {
 		if(userCache.containsKey(user_id)) {
