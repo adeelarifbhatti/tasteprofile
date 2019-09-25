@@ -14,11 +14,11 @@ public class OutputFile {
 	public static void Writer_TimesPlayed(String method, String argument1, int result, long totalTime) {
 		
 		try {
-			if (result !=0){
+			//if (result !=0){
 			Writer writer = new FileWriter("output.txt",true);
 			writer.write("Song " + argument1 + " Played  " + result + " times " + totalTime +"ms\n" );
 			writer.close();
-			}
+			//}
 		}
 
 		catch(Exception e) {
