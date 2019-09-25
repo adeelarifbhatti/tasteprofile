@@ -25,12 +25,10 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayed(String song_id) { 
 		serverPause();
-
 			try {
 				if(songCache.checkSongCache(song_id)) {
-					songCache.getSongCache(song_id);
+					return songCache.getSongCache(song_id);
 				}
-							
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				int totalCount= 0;
 				while (sc.hasNextLine()) {
@@ -97,11 +95,11 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		serverPause();
-		if(songCache.checkSongCache(song_id)) {
-			songCache.getSongCache(song_id);
-		}
 		TopThreeUsersImpl result;
 		try {
+			if(songCache.checkSongCache(song_id)) {
+				return songCache.getSongCacheTopThree(song_id);
+			}
 			
 			UserCounterImpl userCounter;
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
@@ -126,11 +124,8 @@ public class Servant extends ProfilerPOA {
 			Collections.sort(userList, new Sorting());
 			if(userList.size()>2) {
 			UserCounterImpl[] topThree = {userList.get(0),userList.get(1),userList.get(2)};
-			/*System.out.println(topThree);
-			System.out.println(userList.get(0));
-			System.out.println(userList.get(1));
-			System.out.println(userList.get(2));*/
 			result = new TopThreeUsersImpl(topThree);
+			songCache.setSongCacheTopThree(song_id, result);
 			return result;
 			}
 			else {
