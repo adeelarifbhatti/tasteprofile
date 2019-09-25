@@ -76,12 +76,13 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		serverPause();
+		SongCounterImpl songCount;
 		try {
 			
-			/*if(userCache.checkUserCache(song_id)) {
-			return userCache.getUserCacheSongs(user_id);
-				
-			}*/
+			if(userCache.checkUserCache(user_id)) {
+			
+			return userCache.getUserCacheSongs(user_id,song_id);
+			}
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
 			while (sc.hasNextLine()) {
@@ -98,7 +99,6 @@ public class Servant extends ProfilerPOA {
 			}
 			sc.close();
 			ArrayList <SongCounterImpl> songCounter = new ArrayList<SongCounterImpl>();
-			SongCounterImpl songCount;
 			songCount= new SongCounterImpl(song_id, totalCount);
 			songCounter.add(songCount);
 			SongCounterImpl[] song= {songCounter.get(0)};

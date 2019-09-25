@@ -44,8 +44,8 @@ public class UserCache {
 		
 	}
 	
-	public SongCounter[] getUserCacheSongs(String user_id) {
-		return UserCache.get(user_id).songs;
+	public int getUserCacheSongs(String user_id,String song_id) {
+		return UserCache.get(user_id).total_play_count;
 		
 	}
 		
