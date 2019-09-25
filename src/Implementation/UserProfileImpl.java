@@ -34,11 +34,12 @@ public class UserProfileImpl extends UserProfile{
 		this.songs = songs;
 		
 	}
-	public UserProfileImpl(String user_id,int total_play_count, TasteProfile.SongCounter songs[]) {
+	public UserProfileImpl(String user_id, int total_play_count, TasteProfile.SongCounter songs[]) {
 
 
 		this.songs=songs;
 		this.total_play_count = total_play_count;
+		this.songs=songs;
 		
 	}
 	

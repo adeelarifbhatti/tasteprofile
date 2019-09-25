@@ -76,19 +76,6 @@ public class UserCache {
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,userCache.get(user_id).songs, userCache.get(user_id).top_three_songs);
 				return userPrfl;
 			}
-			/*
-			else if(userCache.get(user_id).top_three_songs.equals(null) && !userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,userCache.get(user_id).songs, null);
-				return userPrfl;
-			}
-			else if(userCache.get(user_id).top_three_songs.equals(null) && userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,null, null);
-				return userPrfl;
-			}
-			else if(userCache.get(user_id).top_three_songs.equals(null) && userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,0,null, null);
-				return userPrfl;
-			}*/
 		}
 		return null;
 		

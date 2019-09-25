@@ -37,10 +37,10 @@ public class InputFile {
 			   if (method.equals("getTimesPlayedByUser")) {
 				  
 					if(clientCache.checkLocalCache(argument1)) {
-						  System.out.println("inside clientCache.checkLocalCache ############ ");
 					  	Timer time=new Timer();
+					  	
 					  	time.setStart(System.nanoTime());
-					  	int result= clientCache.getClientCache(argument1);
+					  	int result= clientCache.getClientCacheCount(argument1);
 					  	time.setFinish(System.nanoTime());
 					  	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 					
@@ -52,6 +52,7 @@ public class InputFile {
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+
 					}
 			    	
 			   }
