@@ -12,53 +12,58 @@ import java.util.HashMap;
 public class UserCache {
 	ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(1000);
 	String user_id;
-	HashMap<String,UserProfile> UserCache = new HashMap<String,UserProfile>();
+	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>();
 	
-	public boolean checkUserCache(String user_id) {
-		if(UserCache.containsKey(user_id)) {
+	public boolean checkuserCache(String user_id) {
+		if(userCache.containsKey(user_id)) {
 			return true;
 		}
 		else 
 			return false;
 	}
-	public int getUserCache(String user_id) {
+	public int getuserCache(String user_id) {
 		
-		if(UserCache.containsKey(user_id)) {
-			if(UserCache.get(user_id).total_play_count != 0) { 
-				return UserCache.get(user_id).total_play_count;
+		if(userCache.containsKey(user_id)) {
+			if(userCache.get(user_id).total_play_count != 0) { 
+				//return userCache.get(user_id).total_play_count;
 			}
 		}
 	return 0;
 	}
 	
-	public void setUserCache(String user_id, int totalCount) {
+	public void setuserCache(String user_id, int totalCount) {
 				UserProfileImpl UserPrfl = new UserProfileImpl(user_id, totalCount);
-				UserCache.put(user_id, UserPrfl);
+				userCache.put(user_id, UserPrfl);
 
 			
 	}
 	
-	public void setUserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) {
+	public void setuserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) {
 		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,songs);
-		UserCache.put(user_id, UserPrfl);
+		userCache.put(user_id, UserPrfl);
 		
 	}
 	
-	public int getUserCacheSongs(String user_id,String song_id) {
-		return UserCache.get(user_id).total_play_count;
+	public int getuserCacheSongs(String user_id,String song_id) {
+		// This needs fixing
+		 if(userCache.get(user_id).equals(user_id) && userCache.get(song_id).equals(song_id)){
+			 return userCache.get(user_id).total_play_count;
+			
+		 }
+		 return -1;
 		
 	}
 		
-	public void setUserCacheTopThree(String user_id, TopThreeSongs topthreesongs) {
+	public void setuserCacheTopThree(String user_id, TopThreeSongs topthreesongs) {
 		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,topthreesongs);
-		UserCache.put(user_id, UserPrfl);
+		userCache.put(user_id, UserPrfl);
 
 	
     }
-	public TopThreeSongs getUserCacheTopThree(String user_id) {
-		if(UserCache.containsKey(user_id)) {
-			if(!UserCache.get(user_id).top_three_songs.equals(null)) { 
-				return UserCache.get(user_id).top_three_songs;
+	public TopThreeSongs getuserCacheTopThree(String user_id) {
+		if(userCache.containsKey(user_id)) {
+			if(!userCache.get(user_id).top_three_songs.equals(null)) { 
+				return userCache.get(user_id).top_three_songs;
 			}
 		}
 		return null;
@@ -66,21 +71,21 @@ public class UserCache {
     }
 	
 	public UserProfile getUserProfCache(String user_id) {
-		if(UserCache.containsKey(user_id)) {
-			if(!UserCache.get(user_id).top_three_songs.equals(null) && !UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, UserCache.get(user_id).top_three_songs);
+		if(userCache.containsKey(user_id)) {
+			if(!userCache.get(user_id).top_three_songs.equals(null) && !userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
+				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,userCache.get(user_id).songs, userCache.get(user_id).top_three_songs);
 				return userPrfl;
 			}
 			/*
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && !UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, null);
+			else if(userCache.get(user_id).top_three_songs.equals(null) && !userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
+				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,userCache.get(user_id).songs, null);
 				return userPrfl;
 			}
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,null, null);
+			else if(userCache.get(user_id).top_three_songs.equals(null) && userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
+				UserProfileImpl userPrfl = new UserProfileImpl(user_id,userCache.get(user_id).total_play_count,null, null);
 				return userPrfl;
 			}
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
+			else if(userCache.get(user_id).top_three_songs.equals(null) && userCache.get(user_id).songs.equals(null) && userCache.get(user_id).total_play_count!=0) { 
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,0,null, null);
 				return userPrfl;
 			}*/

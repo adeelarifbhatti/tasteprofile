@@ -62,7 +62,7 @@ public class Servant extends ProfilerPOA {
 	public UserProfile getUserProfile(String user_id) {
 		serverPause();
 		try {
-			if(userCache.checkUserCache(user_id)) {
+			if(userCache.checkuserCache(user_id)) {
 				return userCache.getUserProfCache(user_id);
 			}
 		}
@@ -79,9 +79,10 @@ public class Servant extends ProfilerPOA {
 		SongCounterImpl songCount;
 		try {
 			
-			if(userCache.checkUserCache(user_id)) {
+			if(userCache.checkuserCache(user_id)) {
 			
-			return userCache.getUserCacheSongs(user_id,song_id);
+			//return userCache.getuserCacheSongs(user_id,song_id);
+				
 			}
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
@@ -103,7 +104,7 @@ public class Servant extends ProfilerPOA {
 			songCounter.add(songCount);
 			SongCounterImpl[] song= {songCounter.get(0)};
 			
-			userCache.setUserCacheSongs(user_id,song);
+			userCache.setuserCacheSongs(user_id,song);
 			return totalCount;
 		}
 			catch (FileNotFoundException e) {
@@ -171,8 +172,8 @@ public class Servant extends ProfilerPOA {
 		serverPause();
 		TopThreeSongsImpl result;
 		try {
-			if(userCache.checkUserCache(user_id)) {
-				return userCache.getUserCacheTopThree(user_id);
+			if(userCache.checkuserCache(user_id)) {
+				return userCache.getuserCacheTopThree(user_id);
 			}
 			SongCounterImpl songCounter;
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
@@ -198,7 +199,7 @@ public class Servant extends ProfilerPOA {
 			if(songList.size()>2) {
 			SongCounterImpl[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
 			result = new TopThreeSongsImpl(topThree);
-			userCache.setUserCacheTopThree(user_id, result);
+			userCache.setuserCacheTopThree(user_id, result);
 			return result;
 			}
 			else {
