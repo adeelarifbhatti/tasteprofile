@@ -60,7 +60,15 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public UserProfile getUserProfile(String user_id) {
 		serverPause();
-		// TODO Auto-generated method stub
+		try {
+			if(userCache.checkUserCache(user_id)) {
+				return userCache.getUserProfCache(user_id);
+			}
+		}
+		catch (Exception e) {
+		System.err.println("InterruptedException: " + e.getMessage());
+		e.printStackTrace(System.out);
+	}
 		return null;
 	}
 
@@ -177,10 +185,6 @@ public class Servant extends ProfilerPOA {
 			Collections.sort(songList, new SongSorting());
 			if(songList.size()>2) {
 			SongCounterImpl[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
-			/*System.out.println(topThree);
-			System.out.println(userList.get(0));
-			System.out.println(userList.get(1));
-			System.out.println(userList.get(2));*/
 			result = new TopThreeSongsImpl(topThree);
 			userCache.setUserCacheTopThree(user_id, result);
 			return result;
