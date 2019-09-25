@@ -11,6 +11,7 @@ import Implementation.SongCounterImpl;
 import Implementation.TopThreeSongsImpl;
 import Implementation.UserCounterImpl;
 import TasteProfile.ProfilerPOA;
+import TasteProfile.SongCounter;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
 import TasteProfile.UserProfile;
@@ -76,6 +77,11 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		serverPause();
 		try {
+			
+			/*if(userCache.checkUserCache(song_id)) {
+			return userCache.getUserCacheSongs(user_id);
+				
+			}*/
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
 			while (sc.hasNextLine()) {
@@ -91,7 +97,13 @@ public class Servant extends ProfilerPOA {
 				}
 			}
 			sc.close();
+			ArrayList <SongCounterImpl> songCounter = new ArrayList<SongCounterImpl>();
+			SongCounterImpl songCount;
+			songCount= new SongCounterImpl(song_id, totalCount);
+			songCounter.add(songCount);
+			SongCounterImpl[] song= {songCounter.get(0)};
 			
+			userCache.setUserCacheSongs(user_id,song);
 			return totalCount;
 		}
 			catch (FileNotFoundException e) {

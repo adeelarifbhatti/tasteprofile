@@ -29,6 +29,12 @@ public class UserProfileImpl extends UserProfile{
 		this.total_play_count = total_play_count;
 		
 	}
+	public UserProfileImpl(String user_id, TasteProfile.SongCounter songs[]) {
+
+		this.songs = songs;
+		
+	}
+
 
 
 }

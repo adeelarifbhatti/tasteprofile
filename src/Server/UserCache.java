@@ -1,6 +1,7 @@
 package Server;
 import TasteProfile.UserProfile;
 import TasteProfile.TopThreeSongs;
+import TasteProfile.SongCounter;
 import Implementation.UserProfileImpl;
 
 import java.util.ArrayList;
@@ -36,6 +37,18 @@ public class UserCache {
 
 			
 	}
+	
+	public void setUserCacheSongs(String user_id, TasteProfile.SongCounter songs[]) {
+		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,songs);
+		UserCache.put(user_id, UserPrfl);
+		
+	}
+	
+	public SongCounter[] getUserCacheSongs(String user_id) {
+		return UserCache.get(user_id).songs;
+		
+	}
+		
 	public void setUserCacheTopThree(String user_id, TopThreeSongs topthreesongs) {
 		UserProfileImpl UserPrfl = new UserProfileImpl(user_id,topthreesongs);
 		UserCache.put(user_id, UserPrfl);
@@ -58,6 +71,7 @@ public class UserCache {
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, UserCache.get(user_id).top_three_songs);
 				return userPrfl;
 			}
+			/*
 			else if(UserCache.get(user_id).top_three_songs.equals(null) && !UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, null);
 				return userPrfl;
@@ -69,7 +83,7 @@ public class UserCache {
 			else if(UserCache.get(user_id).top_three_songs.equals(null) && UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,0,null, null);
 				return userPrfl;
-			}
+			}*/
 		}
 		return null;
 		
