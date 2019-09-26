@@ -26,7 +26,7 @@ public class Test {
 		// SongCounterImpl[] song= {songCounter.get(0)};
 		List<String> listWithoutDuplicates;
 		public void createUserID() {
-			List<String>  col0 = new ArrayList<String>();
+			ArrayList<String>  col0 = new ArrayList<String>();
 			
 			try {
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
@@ -52,6 +52,12 @@ public class Test {
 							.collect(Collectors.toSet())
 							.stream()
 							.collect(Collectors.toList());
+					Writer writer = new FileWriter("users.txt",true);
+
+					
+					writer.write(listWithoutDuplicates.toString());
+				
+					writer.close();
 					
 			}
 			
@@ -72,30 +78,55 @@ public class Test {
 			SongCounterImpl songCount;
 			ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(10);
 			ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
-			System.out.println(listWithoutDuplicates);
-			
-					Scanner sc2 = new Scanner(new File("train_triplets_test.txt"));
-					while (sc2.hasNext()) {
-						String line2 = sc2.nextLine();
-						String[] parts2 = line2.split("\t");
-						String user= parts2[1];
-						int totalCount= Integer.parseInt(parts2[2]);
 
-							if(listWithoutDuplicates.equals(user)) {
-								String song_id=parts2[0];
+			try {
+					Scanner sc2 = new Scanner(new File("users.txt"));
+		
+					int i=0;
+					while (sc2.hasNext()) {
+						
+						String line2 = sc2.nextLine();
+						String[] parts2 = line2.split(",");
+						String user= parts2[i];
+						
+						System.out.println("From user file " + user);
+						
+						Scanner sc3 = new Scanner(new File("train_triplets_test.txt"));
+							while (sc3.hasNext()) { 
+								String line3 = sc3.nextLine();
+								String[] parts3 = line3.split("\t");
+								if(user.equals(parts3[1])) {
+									
+								
+								String song_id=parts3[0];
+								int totalCount= Integer.parseInt(parts3[2]);
 								songCount= new SongCounterImpl(song_id, totalCount);
 								songList.add(songCount);
 								SongCounterImpl[] song= {songList.get(0)};
-								totalCount=totalCount+Integer.parseInt(parts2[2]);
-					
-		
-								System.out.println(myUser_id+ " EQUALS  "+ user+" Song Array "+ song +" TotalPlayTime "+ totalCount);
+								totalCount=totalCount+Integer.parseInt(parts3[2]);
+								
+								
+								System.out.println(user+ " EQUALS  "+ user+" Song Array "+ song +" TotalPlayTime "+ totalCount);
 								serverPause();
 							}
-							else
-								System.out.println(myUser_id+ " NOT EQUALS  "+ user);					
+							else {
+								System.out.println(user + " NOT EQUALS  "+ parts3[1]);
+							
+							
+							}
+								}
+							i++;
 						}
+						
+					
 					sc2.close(); 
+			}
+		
+					catch (FileNotFoundException e) {
+						System.out.println(new File(".").getAbsolutePath());
+						System.out.println("no file");
+						e.printStackTrace();
+						}
 
 				
 		}
