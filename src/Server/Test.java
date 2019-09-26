@@ -24,11 +24,10 @@ public class Test {
 		FileInputStream inputStream;
 
 		// SongCounterImpl[] song= {songCounter.get(0)};
-		
+		List<String> listWithoutDuplicates;
 		public void createUserID() {
 			List<String>  col0 = new ArrayList<String>();
-			List<String>  col = new ArrayList<String>();
-			List<String> listWithoutDuplicates;
+			
 			try {
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				while (sc.hasNext()) {
@@ -42,14 +41,10 @@ public class Test {
 						String[] parts2 = line2.split("\t");
 						String user= parts2[1];
 						if(myUser_id.equals(user)) {
-
 							col0.add(myUser_id);
-							System.out.println("From col0 "+col0);
-
 						}
 					}
 					sc3.close();
-				
 				}
 				sc.close();
 				
@@ -57,11 +52,9 @@ public class Test {
 							.collect(Collectors.toSet())
 							.stream()
 							.collect(Collectors.toList());
-					Writer writer = new FileWriter("users.txt",true);
-
-					writer.write(listWithoutDuplicates+"  \n");
-					writer.close();
+					
 			}
+			
 			
 					catch (FileNotFoundException e) {
 						System.out.println(new File(".").getAbsolutePath());
@@ -79,14 +72,16 @@ public class Test {
 			SongCounterImpl songCount;
 			ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(10);
 			ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
+			System.out.println(listWithoutDuplicates);
 			
-				/*	Scanner sc2 = new Scanner(new File("train_triplets_test.txt"));
+					Scanner sc2 = new Scanner(new File("train_triplets_test.txt"));
 					while (sc2.hasNext()) {
 						String line2 = sc2.nextLine();
 						String[] parts2 = line2.split("\t");
 						String user= parts2[1];
+						int totalCount= Integer.parseInt(parts2[2]);
 
-							if(myUser_id.equals(user)) {
+							if(listWithoutDuplicates.equals(user)) {
 								String song_id=parts2[0];
 								songCount= new SongCounterImpl(song_id, totalCount);
 								songList.add(songCount);
@@ -97,10 +92,10 @@ public class Test {
 								System.out.println(myUser_id+ " EQUALS  "+ user+" Song Array "+ song +" TotalPlayTime "+ totalCount);
 								serverPause();
 							}
-							/*else
+							else
 								System.out.println(myUser_id+ " NOT EQUALS  "+ user);					
 						}
-					sc2.close(); */
+					sc2.close(); 
 
 				
 		}
@@ -108,8 +103,9 @@ public class Test {
 
 		public static void main (String [] args){
 			Test test= new Test();
-			test.createProfiles();
 			test.createUserID();
+			test.createProfiles();
+		
 			
 			
 		}
