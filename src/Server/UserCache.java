@@ -2,20 +2,32 @@ package Server;
 import TasteProfile.UserProfile;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.SongCounter;
+import Implementation.SongCounterImpl;
+import Implementation.TopThreeSongsImpl;
 import Implementation.UserProfileImpl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 
 public class UserCache {
-	ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(1000);
+	
 	String user_id;
+	FileInputStream inputStream;
+	TopThreeSongsImpl result;
+	UserProfileImpl userprofile;
 	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>();
-	
-	
-	public boolean checkuserCache(String user_id) {
+	ArrayList <UserProfileImpl> userPrfl = new ArrayList<UserProfileImpl>(100);
+	ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
+		public boolean checkuserCache(String user_id) {
 		if(userCache.containsKey(user_id)) {
 			return true;
 		}
@@ -82,5 +94,87 @@ userCache.put(user_id, UserPrfl);
 		return null;
 		
     }
+
+	public void createUserID() {
+		try {
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			while (sc.hasNext()) {
+				String line = sc.nextLine();
+				String[] parts = line.split("\t");
+				String myUser_id=parts[1];
+				
+				
+				
+				Writer writer = new FileWriter("users.txt",true);
+				writer.write(myUser_id+"\n");
+				writer.close();
+			}
+			
+			sc.close();
+
+		}
+		catch (FileNotFoundException e) {
+					System.out.println(new File(".").getAbsolutePath());
+					System.out.println("no file");
+					e.printStackTrace();
+					}
+				catch(Exception e) {
+					System.err.println("Error:" + e.getMessage());
+					e.printStackTrace(System.out);
+				}
+	}
+	public void createProfiles() {
+		SongCounterImpl songCount;
+
+		
+		try {
+				Scanner sc2 = new Scanner(new File("users.txt"));
+				while (sc2.hasNext()) {
+					
+					String line2 = sc2.nextLine();
+					String user= line2;
+					Scanner sc3 = new Scanner(new File("train_triplets_test.txt"));
+						while (sc3.hasNext()) { 
+							String line3 = sc3.nextLine();
+							String[] parts3 = line3.split("\t");
+							if(user.equals(parts3[1])) {
+							String song_id=parts3[0];
+							int totalCount= Integer.parseInt(parts3[2]);
+							songCount= new SongCounterImpl(song_id, totalCount);
+							songList.add(songCount);
+							SongCounterImpl[] song= {songList.get(0)};
+							totalCount=totalCount+Integer.parseInt(parts3[2]);
+							Collections.sort(songList, new SongSorting());
+							if(songList.size()>2) {
+							SongCounter[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
+							result = new TopThreeSongsImpl(topThree);
+							Collections.sort(userPrfl, new ProfileSorting());
+							userprofile= new UserProfileImpl(user,totalCount, topThree,result);
+							System.out.println("Profile is "+ userprofile.total_play_count + " Songs are "+ song +" "+ result);
+							userCache.put(user,userprofile);
+							}
+							
+						
+							else {
+								
+							}
+					}
+						
+					}
+					sc3.close();
+				
+				
+				}
+				sc2.close(); 
+		}
+	
+				catch (FileNotFoundException e) {
+					System.out.println(new File(".").getAbsolutePath());
+					System.out.println("no file");
+					e.printStackTrace();
+					}
+
+			
+	}
 	
 }
