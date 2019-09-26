@@ -16,7 +16,9 @@ public class Server {
 			ORB orb = ORB.init(args, null);
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
-
+			UserCache userCache=new UserCache();
+			userCache.createUserID();
+			userCache.createProfiles();
 		     Servant servant = new Servant();
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);

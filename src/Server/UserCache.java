@@ -162,9 +162,7 @@ userCache.put(user_id, UserPrfl);
 						
 					}
 					sc3.close();
-				
-				
-				}
+}
 				sc2.close(); 
 		}
 	
