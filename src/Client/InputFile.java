@@ -15,11 +15,11 @@ public class InputFile {
 	Profiler profile;
 	boolean cache =  true;
 	ClientCache clientCache= new ClientCache();
+	
 
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
-		
-			
+			clientCache.getUserProfiles();
 		try {
 				
 			Scanner sc = new Scanner(new File("input.txt"));

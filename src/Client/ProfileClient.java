@@ -17,8 +17,7 @@ public class ProfileClient {
 		NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 		String name =  "Profile";
 		Profiler profileRef = ProfilerHelper.narrow(ncRef.resolve_str(name));
-		ClientCache clientCache= new ClientCache();
-		clientCache.getUserProfiles();
+
 		InputFile inputFile = new InputFile();
 		inputFile.fileRead(profileRef);
 

@@ -28,7 +28,7 @@ public class Servant extends ProfilerPOA {
 	HashMap<String,SongProfile> songCache = new HashMap<String,SongProfile>();
 	//UserProfile userPrfl[] = new UserProfile[1000];
 	ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(1000);
-	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>();
+	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>(1000);
 	
 	@Override
 	public int getTimesPlayed(String song_id) { 

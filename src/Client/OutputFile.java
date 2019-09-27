@@ -15,7 +15,7 @@ public class OutputFile {
 		
 		try {
 			//if (result !=0){
-			Writer writer = new FileWriter("naive.txt",true);
+			Writer writer = new FileWriter("output.txt",true);
 			writer.write("Song " + argument1 + " Played  " + result + " times " + totalTime +"ms\n" );
 			writer.close();
 			//}
@@ -46,7 +46,7 @@ public class OutputFile {
 		
 		try {
 			//if (result !=0){
-			Writer writer = new FileWriter("naive.txt",true);
+			Writer writer = new FileWriter("output.txt",true);
 			writer.write("Song " + argument1 + " Played  " + result + " times " +" By User "+ argument2  +" "+ totalTime +"ms\n" );
 			writer.close();
 			//}
