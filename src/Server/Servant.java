@@ -4,33 +4,41 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
-import Implementation.TopThreeUsersImpl;
 import Implementation.SongCounterImpl;
+import Implementation.SongProfileImpl;
 import Implementation.TopThreeSongsImpl;
+import Implementation.TopThreeUsersImpl;
 import Implementation.UserCounterImpl;
+import Implementation.UserProfileImpl;
 import TasteProfile.ProfilerPOA;
+import TasteProfile.SongCounter;
+import TasteProfile.SongProfile;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
+import TasteProfile.UserCounter;
 import TasteProfile.UserProfile;
 
 public class Servant extends ProfilerPOA {
 	
 	FileInputStream inputStream;
 	int totalCount;
-	SongCache songCache=new SongCache();
-	UserCache userCache=new UserCache();
-
+	HashMap<String,SongProfile> songCache = new HashMap<String,SongProfile>();
+	//UserProfile userPrfl[] = new UserProfile[1000];
+	ArrayList <UserProfile> userPrfl = new ArrayList<UserProfile>(1000);
+	HashMap<String,UserProfile> userCache = new HashMap<String,UserProfile>();
 	
 	@Override
 	public int getTimesPlayed(String song_id) { 
-		serverPause();
+
 			try {
-				if(songCache.checkSongCache(song_id)) {
-					return songCache.getSongCache(song_id);
+				if(songCache.containsKey(song_id)) {
+					if(songCache.get(song_id).total_play_count != 0) { //Check if the song is in Cachee but without the totalplaycount 
+						return songCache.get(song_id).total_play_count;
+					}
 				}
-			
 				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				int totalCount= 0;
 				while (sc.hasNextLine()) {
@@ -40,13 +48,27 @@ public class Servant extends ProfilerPOA {
 					if(song_id.equals(part1)){
 						Integer i = Integer.valueOf(parts[2]);
 						totalCount=totalCount+i;
-
 					}
 				}
+				
+//Put things in cache.
+				if(totalCount > 0) {
+					//Here the second argument is null because we are going to fix it in gettoptheeusersbysong.
+					if(songCache.containsKey(song_id)) {
+						SongProfileImpl songPrfl = new SongProfileImpl(totalCount,songCache.get(song_id).top_three_users);
+						songCache.replace(song_id, songPrfl);
+					}
+					else {
+						SongProfileImpl songPrfl = new SongProfileImpl(totalCount,null);
+						songCache.put(song_id, songPrfl);
+					}
+				}
+				//test
+//				for (String key: songCache.keySet()) {
+//					System.out.println("IN Cache: " + songCache.get(key).total_play_count);
+//				}
 				sc.close();
-				songCache.setSongCache(song_id,totalCount);
 				return totalCount;
-			
 			}
 			catch (FileNotFoundException e) {
 				System.out.println(new File(".").getAbsolutePath());
@@ -59,36 +81,61 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public UserProfile getUserProfile(String user_id) {
-		serverPause();
-		try {
-			if(userCache.checkUserCache(user_id)) {
-				return userCache.getUserProfCache(user_id);
-			}
+		if (userCache.containsKey(user_id)) {
+			return userCache.get(user_id);
 		}
-		catch (Exception e) {
-		System.err.println("InterruptedException: " + e.getMessage());
-		e.printStackTrace(System.out);
-	}
 		return null;
 	}
 
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
-		serverPause();
 		try {
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int totalCount= 0;
+			int totalTimesPlayed = 0;
+			ArrayList <SongCounter> songs = new ArrayList<SongCounter>();
+			
+//Check userCache.
+			if (userCache.containsKey(user_id)) {
+				if (userCache.get(user_id).total_play_count != 0) {
+					for (int i = 0; i<userCache.get(user_id).songs.length; i++) {
+						if (userCache.get(user_id).songs[i].song_id.equals(song_id)) {
+							return userCache.get(user_id).songs[i].songid_play_time;
+						}
+					}
+				}
+			}
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
-				String part1=parts[0];
-				String part2=parts[1];
-				int part3=Integer.parseInt(parts[2]);
+				String song = parts[0];
+				String user = parts[1];
 
-				if(user_id.equals(part1)&&song_id.equals(part2)){
-					totalCount=part3;
-
+				int timesPlayed = Integer.parseInt(parts[2]);
+				
+				if (user_id.equals(user)) {
+					totalTimesPlayed += timesPlayed;
+					SongCounterImpl songCounter = new SongCounterImpl(song,timesPlayed);
+					songs.add(songCounter);
 				}
+				
+				
+				if(user_id.equals(user) && song_id.equals(song)){
+					totalCount=timesPlayed;
+				}
+			}
+//Put things to Cache
+			//TODO maybe sort the arraylist or something like that.
+			if(!songs.isEmpty() && userCache.size() < 1000) {
+				if(userCache.containsKey(user_id)) { // That means that the user is in cache from the other method.
+					UserProfileImpl uPrfl = new UserProfileImpl (user_id, totalTimesPlayed, songs.toArray(new SongCounter[songs.size()]), userCache.get(user_id).top_three_songs);
+					userCache.replace(user_id, uPrfl);
+				}
+				else {
+					UserProfileImpl uPrfl = new UserProfileImpl (user_id, totalTimesPlayed, songs.toArray(new SongCounter[songs.size()]), null);
+					userCache.put(user_id,uPrfl);
+				}
+				
 			}
 			sc.close();
 			
@@ -105,111 +152,136 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
-		serverPause();
-		TopThreeUsersImpl result;
 		try {
-			if(songCache.checkSongCache(song_id)) {
-				return songCache.getSongCacheTopThree(song_id);
+			if(songCache.containsKey(song_id)) {
+				if(songCache.get(song_id).top_three_users != null) { //Check if the song is in Cachee but without the totalplaycount 
+					return songCache.get(song_id).top_three_users;
+				}
 			}
 			
-			UserCounterImpl userCounter;
+			System.out.println("hello topthreeusersbysong");
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			ArrayList <UserCounterImpl> userList = new ArrayList<UserCounterImpl>();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
-				
-				String part1=parts[0];
-				
-				if(song_id.equals(part1)){
-
-					String part2=parts[1];
-					int part3=Integer.parseInt(parts[2]);
-					userCounter = new UserCounterImpl(part2,part3);
+				int comp = song_id.compareTo(parts[0]);
+				if(comp == 0){
+					UserCounterImpl userCounter = new UserCounterImpl(parts[1],Integer.valueOf(parts[2]));
 					userList.add(userCounter);
-					
-				     }
-	
+				}
 			}
+			
 			sc.close();
-			Collections.sort(userList, new UserSorting());
-			if(userList.size()>2) {
-			UserCounterImpl[] topThree = {userList.get(0),userList.get(1),userList.get(2)};
-			result = new TopThreeUsersImpl(topThree);
-			songCache.setSongCacheTopThree(song_id, result);
-			return result;
+			
+			//TODO edge cases
+			Collections.sort(userList);
+			UserCounterImpl[] topThree;
+			if (userList.size() < 3) {
+				topThree = new UserCounterImpl[userList.size()];
+				for (int i =0; i<userList.size(); i++) {
+					topThree[i] = userList.get(i);
+				}
 			}
 			else {
-				UserCounterImpl[] topThree = {};
-				result = new TopThreeUsersImpl(topThree);
-				return result;
+				topThree = new UserCounterImpl[3];
+				for (int i =0; i<3; i++) {
+					topThree[i] = userList.get(i);
+				}
 			}
-	
+			TopThreeUsersImpl result = new TopThreeUsersImpl(topThree);
+			
+			if(songCache.containsKey(song_id)) {
+				SongProfileImpl songPrfl = new SongProfileImpl(songCache.get(song_id).total_play_count,result);
+				songCache.replace(song_id, songPrfl);
+			}
+			else {
+				SongProfileImpl songPrfl = new SongProfileImpl(0,result);
+				songCache.put(song_id, songPrfl);
+			}
+			return result;
 		}
-			catch (FileNotFoundException e) {
-				System.out.println(new File(".").getAbsolutePath());
-				System.out.println("no file");
-				e.printStackTrace();
-			}
+		catch (FileNotFoundException e) {
+			System.out.println(new File(".").getAbsolutePath());
+			System.out.println("no file");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public TopThreeSongs getTopThreeSongsByUser(String user_id) {
-		serverPause();
-		TopThreeSongsImpl result;
-		try {
-			if(userCache.checkUserCache(user_id)) {
-				return userCache.getUserCacheTopThree(user_id);
-			}
-			SongCounterImpl songCounter;
+		//TODO caching and don't duplicate an already existing song
+		
+				try {
+//Check cache
+					if (userCache.containsKey(user_id)) {
+						if (userCache.get(user_id).top_three_songs != null) {
+							System.out.println("Get result from cache");
+							return userCache.get(user_id).top_three_songs;
+						}
+					}
+			System.out.println("hello getTopThreeSongsByUser1");
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
-				
-				String part1=parts[1];
-				
-				if(user_id.equals(part1)){
-
-					String part2=parts[0];
-					int part3=Integer.parseInt(parts[2]);
-					songCounter = new SongCounterImpl(part2,part3);
+				int comp = user_id.compareTo(parts[1]);
+				if(comp == 0){
+					SongCounterImpl songCounter = new SongCounterImpl(parts[0],Integer.valueOf(parts[2]));
 					songList.add(songCounter);
-					
-				     }
-	
+				}
 			}
+			
 			sc.close();
-			Collections.sort(songList, new SongSorting());
-			if(songList.size()>2) {
-			SongCounterImpl[] topThree = {songList.get(0),songList.get(1),songList.get(2)};
-			result = new TopThreeSongsImpl(topThree);
-			userCache.setUserCacheTopThree(user_id, result);
-			return result;
+			
+			//TODO edge cases
+			Collections.sort(songList);
+			SongCounterImpl[] topThree;
+			if (songList.size() < 3) {
+				topThree = new SongCounterImpl[songList.size()];
+				for (int i =0; i<songList.size(); i++) {
+					topThree[i] = songList.get(i);
+				}
 			}
 			else {
-				SongCounterImpl[] topThree = {};
-				result = new TopThreeSongsImpl(topThree);
-				return result;
+				topThree = new SongCounterImpl[3];
+				for (int i =0; i<3; i++) {
+					topThree[i] = songList.get(i);
+				}
+			}	
+			TopThreeSongsImpl result = new TopThreeSongsImpl(topThree);
+			
+//Put things in cache
+			if(userCache.size() < 1000) {
+				if(userCache.containsKey(user_id)) { // That means that the user is in cache from the other method.
+					System.out.println("here put in cache by already existing object");
+					UserProfile u = userCache.get(user_id);
+					UserProfileImpl uPrfl = new UserProfileImpl (user_id, u.total_play_count , u.songs, result);
+					userCache.replace(user_id, uPrfl);
+				}
+				else {
+					System.out.println("here put in cache");
+					UserProfileImpl uPrfl = new UserProfileImpl (user_id, 0, null, result);
+					userCache.put(user_id,uPrfl);
+				}
+				
 			}
-	
+			
+			return result;
 		}
-			catch (FileNotFoundException e) {
-				System.out.println(new File(".").getAbsolutePath());
-				System.out.println("no file");
-				e.printStackTrace();
-			}
+		catch (FileNotFoundException e) {
+			System.out.println(new File(".").getAbsolutePath());
+			System.out.println("no file");
+			e.printStackTrace();
+		}
 		return null;
 	}
-	private void serverPause() {
-		try {
-			Thread.sleep(80);
-		} catch (InterruptedException e) {
-			System.err.println("InterruptedException: " + e.getMessage());
-			e.printStackTrace(System.out);
+	public HashMap<String,UserProfile> getUserProfiles(){
+
+		return userCache;
+
 		}
-	}
 
 }
