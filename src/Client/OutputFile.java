@@ -15,7 +15,22 @@ public class OutputFile {
 		
 		try {
 			//if (result !=0){
-			Writer writer = new FileWriter("output.txt",true);
+			Writer writer = new FileWriter("naive.txt",true);
+			writer.write("Song " + argument1 + " Played  " + result + " times " + totalTime +"ms\n" );
+			writer.close();
+			//}
+		}
+
+		catch(Exception e) {
+		System.err.println("Error:" + e.getMessage());
+		e.printStackTrace(System.out);
+	}
+	}
+	public static void Writer_CacheTimesPlayed(String method, String argument1, int result, long totalTime) {
+		
+		try {
+			//if (result !=0){
+			Writer writer = new FileWriter("clientside_cache_on.txt",true);
 			writer.write("Song " + argument1 + " Played  " + result + " times " + totalTime +"ms\n" );
 			writer.close();
 			//}
@@ -31,7 +46,22 @@ public class OutputFile {
 		
 		try {
 			//if (result !=0){
-			Writer writer = new FileWriter("output.txt",true);
+			Writer writer = new FileWriter("naive.txt",true);
+			writer.write("Song " + argument1 + " Played  " + result + " times " +" By User "+ argument2  +" "+ totalTime +"ms\n" );
+			writer.close();
+			//}
+		}
+
+		catch(Exception e) {
+		System.err.println("Error:" + e.getMessage());
+		e.printStackTrace(System.out);
+	}
+	}
+	public static void Writer_CacheUserPlayed(String method, String argument1, String argument2, int result, long totalTime) {
+		
+		try {
+			//if (result !=0){
+			Writer writer = new FileWriter("clientside_cache_on.txt",true);
 			writer.write("Song " + argument1 + " Played  " + result + " times " +" By User "+ argument2  +" "+ totalTime +"ms\n" );
 			writer.close();
 			//}
@@ -60,9 +90,6 @@ public static void outputWriter_topthreeusers(String method, String argument1, T
 	e.printStackTrace(System.out);
 	}
 }
-
-
-
 
 
 public static void outputWriter_topthreesongs(String method, String argument1, TopThreeSongs topThreeSongs, long totalTime) {

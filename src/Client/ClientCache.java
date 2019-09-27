@@ -2,7 +2,6 @@ package Client;
 
 import TasteProfile.UserProfile;
 import TasteProfile.Profiler;
-import TasteProfile.SongCounter;
 import TasteProfile.TopThreeSongs;
 import Implementation.UserProfileImpl;
 
@@ -35,6 +34,35 @@ public class ClientCache {
 			
 		}
 	}
+	public int getUserCache(String user_id,String song_id) {
+		
+			if(clientCache.get(song_id).total_play_count != 0) { 
+				return clientCache.get(user_id).total_play_count;
+			}
+		
+	return 0;
+	}
+	public int getUserCache(String user_id) {
+		
+		if(clientCache.get(user_id).total_play_count != 0) { 
+			return clientCache.get(user_id).total_play_count;
+		}
+
+	
+		return 0;
+	}
+	public TopThreeSongs getTTSongs(String user_id) {
+		
+		if(clientCache.get(user_id).total_play_count != 0) { 
+			return clientCache.get(user_id).top_three_songs;
+	}
+		return null;
+	}
+
+	
+	public void getUserProfiles(){
+		 clientCache.clone();
+		}
 	
 
 

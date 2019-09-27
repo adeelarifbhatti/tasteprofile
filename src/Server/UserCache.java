@@ -13,6 +13,11 @@ public class UserCache {
 	String user_id;
 	HashMap<String,UserProfile> UserCache = new HashMap<String,UserProfile>();
 	
+	public HashMap<String,UserProfile> getUserProfiles(){
+
+		return UserCache;
+
+		}
 	public boolean checkUserCache(String user_id) {
 		if(UserCache.containsKey(user_id)) {
 			return true;
@@ -58,18 +63,7 @@ public class UserCache {
 				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, UserCache.get(user_id).top_three_songs);
 				return userPrfl;
 			}
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && !UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,UserCache.get(user_id).songs, null);
-				return userPrfl;
-			}
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,UserCache.get(user_id).total_play_count,null, null);
-				return userPrfl;
-			}
-			else if(UserCache.get(user_id).top_three_songs.equals(null) && UserCache.get(user_id).songs.equals(null) && UserCache.get(user_id).total_play_count!=0) { 
-				UserProfileImpl userPrfl = new UserProfileImpl(user_id,0,null, null);
-				return userPrfl;
-			}
+
 		}
 		return null;
 		

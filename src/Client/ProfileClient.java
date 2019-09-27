@@ -19,6 +19,8 @@ public class ProfileClient {
 		Profiler profileRef = ProfilerHelper.narrow(ncRef.resolve_str(name));
 		InputFile inputFile = new InputFile();
 		inputFile.fileRead(profileRef);
+		ClientCache clientCache= new ClientCache();
+		clientCache.getUserProfiles();
 		}
 		catch(Exception e) {
 			System.out.println("Profiler Client Error"+e.getMessage());
