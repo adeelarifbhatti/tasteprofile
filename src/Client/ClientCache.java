@@ -26,14 +26,6 @@ public class ClientCache {
 			return false;
 		}
 	  
-	public void setUserPrfServer(String user_id) {
-		profile.getUserProfile(user_id);
-		if(profile.getUserProfile(user_id)!=null){
-			UserProfileImpl userPrfl = new UserProfileImpl(user_id,clientCache.get(user_id).total_play_count,clientCache.get(user_id).songs,clientCache.get(user_id).top_three_songs);
-			clientCache.put(user_id, userPrfl);
-			
-		}
-	}
 	public int getUserCache(String user_id,String song_id) {
 		
 			if(clientCache.get(song_id).total_play_count != 0) { 
