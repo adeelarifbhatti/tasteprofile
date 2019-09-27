@@ -34,12 +34,14 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayed(String song_id) { 
 
 			try {
+				serverPause();
 				if(songCache.containsKey(song_id)) {
 					if(songCache.get(song_id).total_play_count != 0) { //Check if the song is in Cachee but without the totalplaycount 
 						return songCache.get(song_id).total_play_count;
 					}
 				}
-				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+				
+				Scanner sc = new Scanner(new File("train_triplets.txt"));
 				int totalCount= 0;
 				while (sc.hasNextLine()) {
 					String line = sc.nextLine();
@@ -50,6 +52,7 @@ public class Servant extends ProfilerPOA {
 						totalCount=totalCount+i;
 					}
 				}
+				
 				
 //Put things in cache.
 				if(totalCount > 0) {
@@ -90,7 +93,8 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			serverPause();
+			Scanner sc = new Scanner(new File("train_triplets.txt"));
 			int totalCount= 0;
 			int totalTimesPlayed = 0;
 			ArrayList <SongCounter> songs = new ArrayList<SongCounter>();
@@ -105,6 +109,7 @@ public class Servant extends ProfilerPOA {
 					}
 				}
 			}
+			
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -153,6 +158,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		try {
+			serverPause();
 			if(songCache.containsKey(song_id)) {
 				if(songCache.get(song_id).top_three_users != null) { //Check if the song is in Cachee but without the totalplaycount 
 					return songCache.get(song_id).top_three_users;
@@ -160,7 +166,7 @@ public class Servant extends ProfilerPOA {
 			}
 			
 			System.out.println("hello topthreeusersbysong");
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets.txt"));
 			ArrayList <UserCounterImpl> userList = new ArrayList<UserCounterImpl>();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -214,6 +220,7 @@ public class Servant extends ProfilerPOA {
 		//TODO caching and don't duplicate an already existing song
 		
 				try {
+					serverPause();
 //Check cache
 					if (userCache.containsKey(user_id)) {
 						if (userCache.get(user_id).top_three_songs != null) {
@@ -222,7 +229,7 @@ public class Servant extends ProfilerPOA {
 						}
 					}
 			System.out.println("hello getTopThreeSongsByUser1");
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets.txt"));
 			ArrayList <SongCounterImpl> songList = new ArrayList<SongCounterImpl>();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -283,5 +290,13 @@ public class Servant extends ProfilerPOA {
 		return userCache;
 
 		}
+	private void serverPause() {
+		try {
+			Thread.sleep(80);
+		} catch (InterruptedException e) {
+			System.err.println("InterruptedException: " + e.getMessage());
+			e.printStackTrace(System.out);
+		}
+	}
 
 }
