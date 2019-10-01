@@ -1,7 +1,10 @@
 package Client;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
+
+
 import TasteProfile.Profiler;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
@@ -13,15 +16,19 @@ public class InputFile {
 	public String argument1;
 	public String argument2;
 	Profiler profile;
-	boolean cache =  true;
+	HashMap<String,UserProfile> clientC = new HashMap<>();
 	ClientCache clientCache= new ClientCache();
+	UserProfile userProfile;
+	
+
 	
 
 		public void fileRead(Profiler profile) {
 			this.profile=profile;
-			clientCache.getUserProfiles();
+			
+		
 		try {
-				
+			
 			Scanner sc = new Scanner(new File("input.txt"));
 			int lineNumber= 0;
 			while (sc.hasNextLine()) {
@@ -36,15 +43,18 @@ public class InputFile {
 			   System.out.println(lineNumber + " Method is "+ method + " With  Argument  " + argument1 + " 2nd Argument is " + argument2);
 		
 			   if (method.equals("getTimesPlayedByUser")) {
-
-				
-					if(clientCache.checkLocalCache(argument1)) {
+				   userProfile=profile.getUserProfile(argument1);
+				   if (userProfile!=null) {
+					   clientC.put(argument1, userProfile);
+					   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
+				   }
+				if(clientC.containsKey(argument1)) {
 						
 				  	Timer time=new Timer();
 				   time.setStart(System.nanoTime());
-				   int result= clientCache.getUserCache(argument1,argument2);
+				   int result= clientC.get(argument1).total_play_count;
 				   time.setFinish(System.nanoTime());
-			    	OutputFile.Writer_CacheUserPlayed(method, argument2, argument1, result, time.timing());
+			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 					}
 				   
 				  	Timer time=new Timer();
@@ -56,13 +66,19 @@ public class InputFile {
 			   }
 			  
 			    if (method.equals("getTimesPlayed")) {
-			    	 if(clientCache.checkLocalCache(argument1)) {
+			    	
+					   userProfile=profile.getUserProfile(argument1);
+					   if (userProfile!=null) {
+						   clientC.put(argument1, userProfile);
+						   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
+					   }
+			    	 if(clientC.containsKey(argument1)) {
 			    	
 			    	Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
-			    	int result= clientCache.getUserCache(argument1);
+			    	int result= clientC.get(argument1).total_play_count;
 			    	time.setFinish(System.nanoTime());
-			    	OutputFile.Writer_CacheTimesPlayed(method, argument1, result, time.timing());
+			    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
 			    }
 					 else {
 						   Timer time=new Timer();
@@ -90,16 +106,21 @@ public class InputFile {
 			    
 			    
 			    else if (method.equals("getTopThreeSongsByUser")) {
-				   if (cache) {
-					ClientCache clientCache= new ClientCache();
-					if(clientCache.checkLocalCache(argument1)) {
+			    	
+			    	
+					   userProfile=profile.getUserProfile(argument1);
+					   if (userProfile!=null) {
+						   clientC.put(argument1, userProfile);
+						   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
+					   }
+			    	 if(clientC.containsKey(argument1)) {
 					
 					Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
-			    	TopThreeSongs result=clientCache.getTTSongs(argument1);
+			    	TopThreeSongs result=clientC.get(argument1).top_three_songs;
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
-					}
+					
 				   }
 			    	Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
@@ -110,7 +131,12 @@ public class InputFile {
 			}
 			sc.close();
 		}
-
+		   catch(NullPointerException e) 
+        	{ 
+			   
+            System.out.print("NullPointerException Caught"); 
+            
+        	} 
 			
 			catch(Exception e) {
 			System.err.println("Error:" + e.getMessage());
