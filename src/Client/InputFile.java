@@ -16,8 +16,7 @@ public class InputFile {
 	public String argument1;
 	public String argument2;
 	Profiler profile;
-	HashMap<String,UserProfile> clientC = new HashMap<>();
-	ClientCache clientCache= new ClientCache();
+	HashMap<String,UserProfile> clientC = new HashMap<>(1000);
 	UserProfile userProfile;
 	
 
