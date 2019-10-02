@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
+import Client.OutputFile;
+import Client.Timer;
+
 import java.util.Scanner;
 
 import TasteProfile.ProfilerPOA;
@@ -47,7 +51,7 @@ public class Servant extends ProfilerPOA {
 		HashMap<String,Integer> userPlayTime = new HashMap<String,Integer>();
 
 		try {
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -120,7 +124,7 @@ public class Servant extends ProfilerPOA {
 	public void loadSongProfiles() {
 		try {
 			HashMap<String,ArrayList<UserCounterImpl>> songListeners = new HashMap<String,ArrayList<UserCounterImpl>>();
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -188,7 +192,7 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayed(String song_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 
 			int totalPlayCount = 0;
 			while(sc.hasNextLine()) {
@@ -222,7 +226,18 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		try{
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			if(userProfiles.containsKey(user_id)) {
+				for(int i = 0; i < userProfiles.get(user_id).songs.length ; i++){
+					if(userProfiles.get(user_id).songs[i].song_id.equals(song_id)){
+						int result= userProfiles.get(user_id).songs[i].songid_play_time;
+						return result;
+					}
+			}
+			}
+			
+				
+			
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int playTimeByUser = 0;
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -235,11 +250,19 @@ public class Servant extends ProfilerPOA {
 				if(songID.equals(song_id) && userID.equals(user_id)) {
 					System.out.println(songID + " " + userID + " " + timesPlayed );
 					playTimeByUser += timesPlayed;
+					
 				}
 			}
+			
 			sc.close();
 			return playTimeByUser;
-		}catch(Exception e) {
+		}
+			
+		
+			
+		
+		
+			catch(Exception e) {
 			e.printStackTrace();
 			return -1;
 		}
@@ -261,7 +284,13 @@ public class Servant extends ProfilerPOA {
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			
+			
+			
+			
+			
+			
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			List<UserCounterImpl> users = new ArrayList<UserCounterImpl>();
 
 			while(sc.hasNextLine()) {
@@ -306,7 +335,14 @@ public class Servant extends ProfilerPOA {
 	public TopThreeSongs getTopThreeSongsByUser(String user_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+		  	 if(userProfiles.containsKey(user_id)) {
+	    		 Timer time=new Timer();
+	    		 time.setStart(System.nanoTime());
+	    		 TopThreeSongs result=userProfiles.get(user_id).top_three_songs;
+	    		 return result;
+			
+		   }
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			List<SongCounterImpl> songs = new ArrayList<SongCounterImpl>();
 
 			while(sc.hasNextLine()) {
