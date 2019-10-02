@@ -114,29 +114,13 @@ public class InputFile {
 			   
 			    if (method.equals("getTimesPlayed")) {
 			    	
-					if(!clientC.containsKey(argument1)) {   
-			    	userProfile=profile.getUserProfile(argument1);
-					   if (userProfile!=null) {
-						   clientC.put(argument1, userProfile);
-						   
-					   }
-					}
-			    	 if(clientC.containsKey(argument1)) {
-			    	
-			    	Timer time=new Timer();
-			    	time.setStart(System.nanoTime());
-			    	int result= clientC.get(argument1).total_play_count;
-			    	time.setFinish(System.nanoTime());
-			    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
-			    }
-					 else {
-						   Timer time=new Timer();
+							   Timer time=new Timer();
 					    	time.setStart(System.nanoTime());
 					    	int result= profile.getTimesPlayed(argument1);
 					    	time.setFinish(System.nanoTime());
 					    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
 					    
-					   }
+					
 			    
 			    }
 			    
