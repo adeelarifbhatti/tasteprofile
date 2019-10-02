@@ -1,10 +1,12 @@
 package Client;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
-
+import Implementation.SongCounterImpl;
 import TasteProfile.Profiler;
 import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
@@ -46,9 +48,46 @@ public class InputFile {
 				   if (userProfile!=null) {
 					   clientC.put(argument1, userProfile);
 					   System.out.println("  UserID is   "+ userProfile.user_id + " userProfile play time is " +userProfile.total_play_count);
+					   for(int i = 0; i < clientC.get(argument1).songs.length ; i++){
+							if(clientC.get(argument1).songs[i].song_id.equals(argument2)){
+							 	Timer time=new Timer();
+							 	int result= clientC.get(argument1).songs[i].songid_play_time;
+							 	time.setFinish(System.nanoTime());
+							    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+	System.out.println("#############" + clientC.get(argument1).songs[i] +" ###  Time is ## " + clientC.get(argument1).songs[i].songid_play_time);
+							}
+					   }
 				   }
-				   /*
+					  /* List<SongCounterImpl> songs = new ArrayList<SongCounterImpl>();
+					   if(userProfile.songs.length>0) {
+						   System.out.println(userProfile.songs[0].song_id);
+								   //song[i].song_id);
+					   }
+					   
+					   
+				   }
+					 if(clientC.containsKey(argument1)) {
+							for(int i = 0; i < clientC.get(argument1).songs.length ; i++){
+									if(clientC.get(argument1).songs[i].song_id==argument2){
+									 	Timer time=new Timer();
+									 	int result= clientC.get(argument1).songs[i].songid_play_time;
+									 	time.setFinish(System.nanoTime());
+									    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+			System.out.println("#############" + clientC.get(argument1).songs[i] +" ###  Time is ## " + clientC.get(argument1).songs[i].songid_play_time);
+										
+									}
+									
+									}
+									
+									}
+
 				 if(clientC.containsKey(argument1)) {
+				for(int i = 0; i < userProfile.songs.length ; i++){
+						if(userProfile.songs[0].song_id==argument2){
+						
+						}
+						
+						}
 						
 				  	Timer time=new Timer();
 				   time.setStart(System.nanoTime());
@@ -56,15 +95,15 @@ public class InputFile {
 				   time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 					}
-				   
+				*/   
 				else { 
-				*/
+				
 					Timer time=new Timer();
 				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
-				//}
+				}
 			    	
 			   }
 			  
