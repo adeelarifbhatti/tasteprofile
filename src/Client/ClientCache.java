@@ -2,17 +2,21 @@ package Client;
 
 import TasteProfile.UserProfile;
 import TasteProfile.TopThreeSongs;
+import TasteProfile.Profiler;
 
 
 import java.util.HashMap;
 
+import Implementation.UserProfileImpl;
 
 
-public class ClientCache {
 
-	HashMap<String,UserProfile> clientCache = new HashMap<String,UserProfile>();
+public class ClientCache extends UserProfile {
+
+	HashMap<String,UserProfileImpl> clientCache = new HashMap<>();
  
 		public boolean checkLocalCache(String user_id) {
+			
 			if(clientCache.containsKey(user_id))
 			return true;
 			else 
@@ -45,11 +49,13 @@ public class ClientCache {
 	}
 
 	
-	public void getUserProfiles(){
+	/*public void getUserProfile(String user_id){
+		
 		 clientCache.clone();
+		 System.out.println(clientCache.size());
 		 System.out.println(clientCache.clone());
 		}
-	
+	*/
 
 
 

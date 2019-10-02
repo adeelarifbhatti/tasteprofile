@@ -18,6 +18,7 @@ public class Server {
 			rootpoa.the_POAManager().activate();
 
 		     Servant servant = new Servant();
+		     servant.loadUserProfiles();
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);
 			 

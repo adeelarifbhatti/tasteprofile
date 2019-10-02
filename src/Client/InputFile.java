@@ -45,7 +45,7 @@ public class InputFile {
 				   userProfile=profile.getUserProfile(argument1);
 				   if (userProfile!=null) {
 					   clientC.put(argument1, userProfile);
-					   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
+					   System.out.println("  UserID is   "+ userProfile.user_id + " userProfile play time is " +userProfile.total_play_count);
 				   }
 				if(clientC.containsKey(argument1)) {
 						
