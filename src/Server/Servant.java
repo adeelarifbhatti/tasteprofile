@@ -187,6 +187,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayed(String song_id) {
 		try {
+			serverPause();
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 
 			int totalPlayCount = 0;
@@ -220,6 +221,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		try{
+			serverPause();
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int playTimeByUser = 0;
 			while(sc.hasNextLine()) {
@@ -258,6 +260,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		try {
+			serverPause();
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			List<UserCounterImpl> users = new ArrayList<UserCounterImpl>();
 
@@ -302,6 +305,7 @@ public class Servant extends ProfilerPOA {
 	@Override
 	public TopThreeSongs getTopThreeSongsByUser(String user_id) {
 		try {
+			serverPause();
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			List<SongCounterImpl> songs = new ArrayList<SongCounterImpl>();
 
@@ -339,6 +343,15 @@ public class Servant extends ProfilerPOA {
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	private void serverPause() {
+		try {
+			Thread.sleep(80);
+		} catch (InterruptedException e) {
+			System.err.println("InterruptedException: " + e.getMessage());
+			e.printStackTrace(System.out);
 		}
 	}
 
