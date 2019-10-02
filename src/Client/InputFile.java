@@ -47,7 +47,8 @@ public class InputFile {
 					   clientC.put(argument1, userProfile);
 					   System.out.println("  UserID is   "+ userProfile.user_id + " userProfile play time is " +userProfile.total_play_count);
 				   }
-				if(clientC.containsKey(argument1)) {
+				   /*
+				 if(clientC.containsKey(argument1)) {
 						
 				  	Timer time=new Timer();
 				   time.setStart(System.nanoTime());
@@ -56,13 +57,14 @@ public class InputFile {
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 					}
 				   
-				else {
+				else { 
+				*/
 					Timer time=new Timer();
 				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
-				}
+				//}
 			    	
 			   }
 			  
