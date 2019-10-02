@@ -107,13 +107,20 @@ public class InputFile {
 			    	
 			   }
 			  
+			   
+			   
+			   
+			   
+			   
 			    if (method.equals("getTimesPlayed")) {
 			    	
-					   userProfile=profile.getUserProfile(argument1);
+					if(!clientC.containsKey(argument1)) {   
+			    	userProfile=profile.getUserProfile(argument1);
 					   if (userProfile!=null) {
 						   clientC.put(argument1, userProfile);
-						   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
+						   
 					   }
+					}
 			    	 if(clientC.containsKey(argument1)) {
 			    	
 			    	Timer time=new Timer();
