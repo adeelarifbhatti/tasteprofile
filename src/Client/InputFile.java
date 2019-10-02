@@ -106,27 +106,16 @@ public class InputFile {
 				}
 			    	
 			   }
-			  
-			   
-			   
-			   
-			   
-			   
-			    if (method.equals("getTimesPlayed")) {
+			   if (method.equals("getTimesPlayed")) {
 			    	
 							   Timer time=new Timer();
 					    	time.setStart(System.nanoTime());
 					    	int result= profile.getTimesPlayed(argument1);
 					    	time.setFinish(System.nanoTime());
 					    	OutputFile.Writer_TimesPlayed(method, argument1, result, time.timing());
-					    
-					
-			    
+					    	
 			    }
-			    
-			    
-
-			    else if (method.equals("getTopThreeUsersBySong")) {
+			   else if (method.equals("getTopThreeUsersBySong")) {
 			    	Timer time=new Timer();
 			    	time.setStart(System.nanoTime());
 			    	TopThreeUsers result=profile.getTopThreeUsersBySong(argument1);
@@ -140,19 +129,21 @@ public class InputFile {
 			    
 			    else if (method.equals("getTopThreeSongsByUser")) {
 			    	
-			    	
+			    	if(!clientC.containsKey(argument1)) {
+			    		
+			    
 					   userProfile=profile.getUserProfile(argument1);
 					   if (userProfile!=null) {
 						   clientC.put(argument1, userProfile);
 						   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
 					   }
+			    	}
 			    	 if(clientC.containsKey(argument1)) {
-					
-					Timer time=new Timer();
-			    	time.setStart(System.nanoTime());
-			    	TopThreeSongs result=clientC.get(argument1).top_three_songs;
-			    	time.setFinish(System.nanoTime());
-			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
+			    		 Timer time=new Timer();
+			    		 time.setStart(System.nanoTime());
+			    		 TopThreeSongs result=clientC.get(argument1).top_three_songs;
+			    		 time.setFinish(System.nanoTime());
+			    		 OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
 					
 				   }
 			    else {
