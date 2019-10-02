@@ -56,11 +56,13 @@ public class InputFile {
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 					}
 				   
-				  	Timer time=new Timer();
+				else {
+					Timer time=new Timer();
 				   time.setStart(System.nanoTime());
 			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+				}
 			    	
 			   }
 			  
@@ -121,11 +123,13 @@ public class InputFile {
 			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
 					
 				   }
-			    	Timer time=new Timer();
-			    	time.setStart(System.nanoTime());
-			    	TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
-			    	time.setFinish(System.nanoTime());
-			    	OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
+			    else {
+			    		Timer time=new Timer();
+			    		time.setStart(System.nanoTime());
+			    		TopThreeSongs result=profile.getTopThreeSongsByUser(argument1);
+			    		time.setFinish(System.nanoTime());
+			    		OutputFile.outputWriter_topthreesongs(method, argument1, result, time.timing());
+			    	 }
 			    }
 			}
 			sc.close();
