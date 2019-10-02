@@ -47,7 +47,7 @@ public class Servant extends ProfilerPOA {
 		HashMap<String,Integer> userPlayTime = new HashMap<String,Integer>();
 
 		try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -120,7 +120,7 @@ public class Servant extends ProfilerPOA {
 	public void loadSongProfiles() {
 		try {
 			HashMap<String,ArrayList<UserCounterImpl>> songListeners = new HashMap<String,ArrayList<UserCounterImpl>>();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -188,7 +188,7 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayed(String song_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 
 			int totalPlayCount = 0;
 			while(sc.hasNextLine()) {
@@ -222,7 +222,7 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		try{
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			int playTimeByUser = 0;
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -261,7 +261,7 @@ public class Servant extends ProfilerPOA {
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			List<UserCounterImpl> users = new ArrayList<UserCounterImpl>();
 
 			while(sc.hasNextLine()) {
@@ -306,7 +306,7 @@ public class Servant extends ProfilerPOA {
 	public TopThreeSongs getTopThreeSongsByUser(String user_id) {
 		try {
 			serverPause();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			List<SongCounterImpl> songs = new ArrayList<SongCounterImpl>();
 
 			while(sc.hasNextLine()) {
