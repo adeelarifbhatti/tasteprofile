@@ -51,6 +51,7 @@ public class InputFile {
 					   for(int i = 0; i < clientC.get(argument1).songs.length ; i++){
 							if(clientC.get(argument1).songs[i].song_id.equals(argument2)){
 							 	Timer time=new Timer();
+							 	time.setStart(System.nanoTime());
 							 	int result= clientC.get(argument1).songs[i].songid_play_time;
 							 	time.setFinish(System.nanoTime());
 							    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
