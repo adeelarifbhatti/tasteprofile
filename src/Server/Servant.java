@@ -170,6 +170,7 @@ public class Servant extends ProfilerPOA {
 				SongProfileImpl sp = new SongProfileImpl(totalPlayTime,top);
 				songProfiles.put(entry.getKey(), sp);
 			}
+			System.out.println("SongsProfiles are ready");
 			sc.close();
 		}
 		catch(Exception e) {
@@ -192,6 +193,11 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayed(String song_id) {
 		try {
 			serverPause();
+			if (songProfiles.containsKey(song_id)) {
+				return songProfiles.get(song_id).total_play_count;
+			}
+			
+			
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 
 			int totalPlayCount = 0;
@@ -284,7 +290,10 @@ public class Servant extends ProfilerPOA {
 	public TopThreeUsers getTopThreeUsersBySong(String song_id) {
 		try {
 			serverPause();
-			
+			if(songProfiles.containsKey(song_id)) {
+				return songProfiles.get(song_id).top_three_users;
+				
+			}
 			
 			
 			

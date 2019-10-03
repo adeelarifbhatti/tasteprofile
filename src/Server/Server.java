@@ -19,6 +19,7 @@ public class Server {
 
 		     Servant servant = new Servant();
 		     servant.loadUserProfiles();
+		     servant.loadSongProfiles();
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler
 			 href=ProfilerHelper.narrow(ref);
 			 
