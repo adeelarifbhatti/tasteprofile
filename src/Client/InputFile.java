@@ -50,16 +50,24 @@ public class InputFile {
 					    
 					   clientC.put(argument1, userProfile);
 					   System.out.println("  UserID is   "+ userProfile.user_id + " userProfile play time is " +userProfile.total_play_count);
+					   int hit=0;
 					   for(int i = 0; i < clientC.get(argument1).songs.length ; i++){
-							if(clientC.get(argument1).songs[i].song_id.equals(argument2)){
+						  	if(clientC.get(argument1).songs[i].song_id.equals(argument2)){
 							 	Timer time=new Timer();
 							 	time.setStart(System.nanoTime());
 							 	int result= clientC.get(argument1).songs[i].songid_play_time;
 							 	time.setFinish(System.nanoTime());
 							    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+							    hit=1;
 	System.out.println("#############" + clientC.get(argument1).songs[i] +" ###  Time is ## " + clientC.get(argument1).songs[i].songid_play_time);
 							}
 							  						
+					   }
+					   if(hit==0) {
+						   Timer time=new Timer();
+						 	time.setStart(System.nanoTime());
+						   time.setFinish(System.nanoTime());
+						    OutputFile.Writer_UserPlayed(method, argument2, argument1, 0, time.timing());
 					   }
 						
 
