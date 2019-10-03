@@ -46,6 +46,7 @@ public class InputFile {
 			   if (method.equals("getTimesPlayedByUser")) {
 				   userProfile=profile.getUserProfile(argument1);
 				   if (userProfile!=null) {
+					   // To disable the client cache, comment following line 
 					   clientC.put(argument1, userProfile);
 					   System.out.println("  UserID is   "+ userProfile.user_id + " userProfile play time is " +userProfile.total_play_count);
 					   for(int i = 0; i < clientC.get(argument1).songs.length ; i++){
@@ -57,7 +58,17 @@ public class InputFile {
 							    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 	System.out.println("#############" + clientC.get(argument1).songs[i] +" ###  Time is ## " + clientC.get(argument1).songs[i].songid_play_time);
 							}
+							   else {
+								 	Timer time=new Timer();
+								 	time.setStart(System.nanoTime());
+								 	int result= clientC.get(argument1).songs[i].songid_play_time;
+								 	time.setFinish(System.nanoTime());
+								    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
+							   }
+							
 					   }
+						
+
 				   }
 					  /* List<SongCounterImpl> songs = new ArrayList<SongCounterImpl>();
 					   if(userProfile.songs.length>0) {
@@ -135,6 +146,7 @@ public class InputFile {
 			    
 					   userProfile=profile.getUserProfile(argument1);
 					   if (userProfile!=null) {
+						   // To disable the client cache, comment the following line
 						   clientC.put(argument1, userProfile);
 						   System.out.println(userProfile.total_play_count +"userProfile play time is "+ userProfile.user_id);
 					   }
