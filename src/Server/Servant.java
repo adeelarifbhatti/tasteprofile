@@ -233,15 +233,17 @@ public class Servant extends ProfilerPOA {
 		try{
 			serverPause();
 			if(userProfiles.containsKey(user_id)) {
+				
+				System.out.println("From Server Cache");
 				for(int i = 0; i < userProfiles.get(user_id).songs.length ; i++){
 					if(userProfiles.get(user_id).songs[i].song_id.equals(song_id)){
-						int result= userProfiles.get(user_id).songs[i].songid_play_time;
-						return result;
+						return userProfiles.get(user_id).songs[i].songid_play_time;
+						
 					}
 			}
 			}
 			
-				
+			
 			
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			int playTimeByUser = 0;
