@@ -59,14 +59,7 @@ public class InputFile {
 							    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 	System.out.println("#############" + clientC.get(argument1).songs[i] +" ###  Time is ## " + clientC.get(argument1).songs[i].songid_play_time);
 							}
-							   else {
-								 	Timer time=new Timer();
-								 	time.setStart(System.nanoTime());
-								 	int result= clientC.get(argument1).songs[i].songid_play_time;
-								 	time.setFinish(System.nanoTime());
-								    OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
-							   }
-							
+							  						
 					   }
 						
 
