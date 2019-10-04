@@ -45,7 +45,7 @@ public class InputFile {
 		
 			   if (method.equals("getTimesPlayedByUser")) {
 				   //Comment following section till it says "EnD"  to disable the cache     ####################################################
-				   userProfile=profile.getUserProfile(argument1);
+				  /* userProfile=profile.getUserProfile(argument1);
 				   if (userProfile!=null) {
 					    
 					   clientC.put(argument1, userProfile);
@@ -75,15 +75,15 @@ public class InputFile {
 					  
 				// EnD              ##################################################################################
 				 // also comment following else line with { } brakets 
-				else { 
+				else { */
 				
 					Timer time=new Timer();
 				   time.setStart(System.nanoTime());
-			    	int result=profile.getTimesPlayedByUser(argument2,argument1);
+			    	int result=profile.getTimesPlayedByUser(argument1,argument2);
 			    	time.setFinish(System.nanoTime());
 			    	OutputFile.Writer_UserPlayed(method, argument2, argument1, result, time.timing());
 			    	// also comment following else line with { } brakets #####################################################
-				}
+			//	}
 			    	
 			   }
 			   if (method.equals("getTimesPlayed")) {

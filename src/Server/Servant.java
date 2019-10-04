@@ -232,6 +232,7 @@ public class Servant extends ProfilerPOA {
 	public int getTimesPlayedByUser(String user_id, String song_id) {
 		try{
 			serverPause();
+			System.out.println("Check for empty cache? " + userProfiles.isEmpty() + "Do i have user_id? " + user_id + userProfiles.containsKey(user_id));
 			if(userProfiles.containsKey(user_id)) {
 				
 				System.out.println("From Server Cache");
