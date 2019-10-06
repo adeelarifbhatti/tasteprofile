@@ -100,9 +100,10 @@ public class Servant extends ProfilerPOA {
 		HashMap<String,Integer> userPlayTime = new HashMap<String,Integer>();
 
 		try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+		
 			
 			for(int i = 0; i< top1000.size();i++) {	
+				Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 				//System.out.println("From For Loop " + top1000.get(i).UserID + " Play time "+ top1000.get(i).totalTimesPlayed);
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -138,7 +139,7 @@ public class Servant extends ProfilerPOA {
 					songInfo.put(topID,ui);
 				}
 				else if (!userID.equals(topID)){
-					System.out.println("!userID.equals(topID) "+ userID + " not equal " + topID);
+					System.out.println("##################### " + topID + " i= "+ i);
 				}
 			}
 			
@@ -179,12 +180,13 @@ public class Servant extends ProfilerPOA {
 					userProfiles.put(ui.UserID,up);
 	
 				}
+				sc.close();
 			}
 			
 				System.out.println("UserProfiles are ready");
 				System.out.println("UserProfile Size is " +userProfiles.size());
 				System.out.println(userProfiles.containsKey("3083ee4551283b0a607745b666550e6f5dc4c242"));
-				sc.close();
+			
 
 		}
 		
