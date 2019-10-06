@@ -138,11 +138,11 @@ public class Servant extends ProfilerPOA {
 					songInfo.put(topID,ui);
 				}
 				else if (!userID.equals(topID)){
-				//	System.out.println("userID.equals(topID) "+ userID + " " + topID);
+					System.out.println("!userID.equals(topID) "+ userID + " not equal " + topID);
 				}
 			}
 			
-			}
+			
 			
 			
 
@@ -179,6 +179,7 @@ public class Servant extends ProfilerPOA {
 					userProfiles.put(ui.UserID,up);
 	
 				}
+			}
 			
 				System.out.println("UserProfiles are ready");
 				System.out.println("UserProfile Size is " +userProfiles.size());
