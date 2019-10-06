@@ -28,11 +28,14 @@ public class Servant extends ProfilerPOA {
 
 	HashMap<String, SongProfileImpl> songProfiles = new HashMap<>();
 	HashMap<String, UserProfileImpl> userProfiles = new HashMap<>();
+	ArrayList<UserInfo> top1000 = new ArrayList<>();
 
 	class UserInfo implements Comparable<UserInfo>{
 		String UserID;
 		int totalTimesPlayed;
+		ArrayList<UserCounterImpl> listenedTime;
 		ArrayList<SongCounterImpl> songsListenedTo;
+		
 
 		@Override
 		public int compareTo(UserInfo u) {
@@ -45,11 +48,12 @@ public class Servant extends ProfilerPOA {
 			}
 		}
 	}
-
-	public void loadUserProfiles() {
-		HashMap<String,UserInfo> songInfo = new HashMap<>();
-		HashMap<String,Integer> userPlayTime = new HashMap<String,Integer>();
-
+	
+	public void topUsers() {
+		HashMap<String,UserInfo> userInfo = new HashMap<>();
+		
+		
+		
 		try {
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
@@ -59,58 +63,125 @@ public class Servant extends ProfilerPOA {
 				String songID = parts[0];
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
+				ArrayList<UserCounterImpl> users;
+
+				if(userInfo.containsKey(userID)) {
+					users = userInfo.get(userID).listenedTime;
+					userInfo.get(userID).totalTimesPlayed += timesPlayed;
+
+				}
+				else {
+					users = new ArrayList<>();
+					users.add(new UserCounterImpl(userID,timesPlayed));
+					UserInfo ui = new UserInfo();
+					ui.UserID = userID;
+					ui.totalTimesPlayed = timesPlayed;
+					userInfo.put(userID,ui);
+				}
+			}
+			
+			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo.values());
+			Collections.sort(allInfo);
+			
+			for(int i = 0; i< 1000;i++) {
+				top1000.add(allInfo.get(i));
+				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " +  top1000.get(i).totalTimesPlayed + "  " +  top1000.size());
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(top1000.size());
+	}
+
+	public void loadUserProfiles() {
+		HashMap<String,UserInfo> songInfo = new HashMap<>();
+		HashMap<String,Integer> userPlayTime = new HashMap<String,Integer>();
+
+		try {
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			
+			//for(int i = 0; i< top1000.size();i++) {	
+				//System.out.println("From For Loop " + top1000.get(i).UserID + " Play time "+ top1000.get(i).totalTimesPlayed);
+			while(sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] parts = line.split("\t");
+
+				String songID = parts[0];
+				String userID = parts[1];
+				for(int i = 0; i< top1000.size();i++) {
+				String topID = top1000.get(i).UserID;
+				int timesPlayed = Integer.parseInt(parts[2]);
 				ArrayList<SongCounterImpl> songs;
 
-				if(songInfo.containsKey(userID)) {
+				if(songInfo.containsKey(topID) && userID.equals(topID)) {
+					System.out.println(i +" "+songInfo.containsKey(top1000.get(i).UserID));
 					songs = songInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
 					songs.add(song);
 
 					songInfo.get(userID).songsListenedTo = songs;
 					songInfo.get(userID).totalTimesPlayed += timesPlayed;
+					System.out.println(songInfo.size());
 
-				}else {
+				}
+				else if (userID.equals(topID) && !songInfo.containsKey(topID)) {
+					System.out.println("userID.equals(topID)"+ userID.equals(topID));
 					songs = new ArrayList<>();
 					songs.add(new SongCounterImpl(songID,timesPlayed));
 					UserInfo ui = new UserInfo();
 					ui.UserID = userID;
 					ui.songsListenedTo = songs;
 					ui.totalTimesPlayed = timesPlayed;
-					songInfo.put(userID,ui);
+					songInfo.put(topID,ui);
+				}
+				else if (!userID.equals(topID)){
+				//	System.out.println("userID.equals(topID) "+ userID + " " + topID);
 				}
 			}
+			
+			}
+			
 			
 
 				//ArrayList<UserInfo> allInfo = (ArrayList<UserInfo>) songInfo.values();
 				List<UserInfo> allInfo = new ArrayList<UserInfo>(songInfo.values());
 				Collections.sort(allInfo);
 
-				ArrayList<UserInfo> top1000 = new ArrayList<>();
-				for(int i = 0; i< allInfo.size();i++) {
-					top1000.add(allInfo.get(i));
+				ArrayList<UserInfo> top = new ArrayList<>();
+				for(int k = 0; k< allInfo.size();k++) {
+					top.add(allInfo.get(k));
+					System.out.println(allInfo.size());
+					
 				}
 
 
-				for(UserInfo ui : top1000) {
+				for(UserInfo ui : top) {
 					Collections.sort(ui.songsListenedTo);
 					SongCounterImpl[] top3 = null;
+					
 					if(ui.songsListenedTo.size() < 3) {
 						top3 = new SongCounterImpl[ui.songsListenedTo.size()];
-						for(int i = 0; i< ui.songsListenedTo.size();i++) {
-							top3[i] = ui.songsListenedTo.get(i);
+						for(int j = 0; j< ui.songsListenedTo.size();j++) {
+							top3[j] = ui.songsListenedTo.get(j);
 						}
 					}else {
 						SongCounterImpl[] tmp = {ui.songsListenedTo.get(0),ui.songsListenedTo.get(1),ui.songsListenedTo.get(2)};
 						top3 = tmp;
 					}
-
+			 
 					ArrayList<SongCounterImpl> songsListenedTo = ui.songsListenedTo;
 					SongCounterImpl[] item = songsListenedTo.toArray(new SongCounterImpl[songsListenedTo.size()]);
 
 					UserProfileImpl up = new UserProfileImpl(ui.UserID,ui.totalTimesPlayed,item,new TopThreeSongsImpl(top3));
 					userProfiles.put(ui.UserID,up);
+	
 				}
+			
 				System.out.println("UserProfiles are ready");
+				System.out.println("UserProfile Size is " +userProfiles.size());
+				System.out.println(userProfiles.containsKey("3083ee4551283b0a607745b666550e6f5dc4c242"));
 				sc.close();
 
 		}
