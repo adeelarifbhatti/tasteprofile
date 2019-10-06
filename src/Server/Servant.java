@@ -102,7 +102,7 @@ public class Servant extends ProfilerPOA {
 		try {
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			
-			//for(int i = 0; i< top1000.size();i++) {	
+			for(int i = 0; i< top1000.size();i++) {	
 				//System.out.println("From For Loop " + top1000.get(i).UserID + " Play time "+ top1000.get(i).totalTimesPlayed);
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -110,13 +110,14 @@ public class Servant extends ProfilerPOA {
 
 				String songID = parts[0];
 				String userID = parts[1];
-				for(int i = 0; i< top1000.size();i++) {
-				String topID = top1000.get(i).UserID;
 				int timesPlayed = Integer.parseInt(parts[2]);
 				ArrayList<SongCounterImpl> songs;
+				
+				String topID = top1000.get(i).UserID;
+
 
 				if(songInfo.containsKey(topID) && userID.equals(topID)) {
-					System.out.println(i +" "+songInfo.containsKey(top1000.get(i).UserID));
+					System.out.println(i +" "+songInfo.containsKey(top1000.get(i).UserID)  + "  UserID is "+top1000.get(i).UserID +" And TotalTimePlayed is "+ top1000.get(i).totalTimesPlayed);
 					songs = songInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
 					songs.add(song);
@@ -127,7 +128,7 @@ public class Servant extends ProfilerPOA {
 
 				}
 				else if (userID.equals(topID) && !songInfo.containsKey(topID)) {
-					System.out.println("userID.equals(topID)"+ userID.equals(topID));
+					System.out.println(userID+" equals "+ topID + " "+ userID.equals(topID));
 					songs = new ArrayList<>();
 					songs.add(new SongCounterImpl(songID,timesPlayed));
 					UserInfo ui = new UserInfo();
