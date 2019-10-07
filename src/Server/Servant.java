@@ -30,6 +30,7 @@ public class Servant extends ProfilerPOA {
 	HashMap<String, UserProfileImpl> userProfiles = new HashMap<>();
 	HashMap<String,UserInfo> userInfo = new HashMap<>();
 	HashMap<String,UserInfo> userInfo2 = new HashMap<>();
+	ArrayList<UserInfo> top10000 = new ArrayList<>();
 	ArrayList<UserInfo> top1000 = new ArrayList<>();
 
 	class UserInfo implements Comparable<UserInfo>{
@@ -53,7 +54,7 @@ public class Servant extends ProfilerPOA {
 	
 	public void topUsers() {
 	try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -90,13 +91,13 @@ public class Servant extends ProfilerPOA {
 			List<UserInfo> allInfo1 = new ArrayList<UserInfo>(userInfo.values());
 			Collections.sort(allInfo1);
 			
-			for(int i = 0; i< 40;i++) {
-				top1000.add(allInfo1.get(i));
-				userInfo2.put(top1000.get(i).UserID, top1000.get(i));
+			for(int i = 0; i< 2000;i++) {
+				top10000.add(allInfo1.get(i));
+				userInfo2.put(top10000.get(i).UserID, top10000.get(i));
 				
 			}
 			
-			Scanner sc2 = new Scanner(new File("train_triplets_test2.txt"));
+			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
 			while(sc2.hasNextLine()) {
 				String line = sc2.nextLine();
 				String[] parts2 = line.split("\t");
@@ -113,13 +114,10 @@ public class Servant extends ProfilerPOA {
 					songs2 = userInfo2.get(userID2).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID2,timesPlayed);
 					songs2.add(song);
-					System.out.println(userInfo.size()+" ########### Inside File 2  It contains USER_ID from file 1");
-					
+					System.out.println("Song is "+ song.song_id+ " User ID is " + userID2+" TotalPlayTime is " 
+					+ userInfo.get(userID2).totalTimesPlayed );
+			
 
-				}
-				else {
-					
-					System.out.println(userInfo2.size()+" Inside File 2 It Doesn't contain USER_ID from file 1");
 				}
 			}
 			sc2.close();
@@ -128,7 +126,7 @@ public class Servant extends ProfilerPOA {
 			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo2.values());
 			Collections.sort(allInfo);
 			
-			for(int i = 0; i< 40;i++) {
+			for(int i = 0; i< 1000;i++) {
 				top1000.add(allInfo.get(i));
 
 				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " 
