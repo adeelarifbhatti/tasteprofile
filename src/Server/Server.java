@@ -18,8 +18,10 @@ public class Server {
 			rootpoa.the_POAManager().activate();
 
 		     Servant servant = new Servant();
+		     servant.loadUserProfiles();
+		   
 		     // To disable the cache on server please comment the following two line		     
-		     servant.topUsers();
+		   //  servant.topUsers();
 		   //  servant.loadUserProfiles();
 		     // disabling songs profiles, it doesn't work for now
 		     //servant.loadSongProfiles();
