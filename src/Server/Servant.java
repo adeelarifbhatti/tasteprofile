@@ -337,32 +337,56 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public int getTimesPlayed(String song_id) {
-		try {
-			serverPause();
-			if (songProfiles.containsKey(song_id)) {
-				return songProfiles.get(song_id).total_play_count;
-			}
+
+				try {
+					int breaker=0;
+					serverPause();
+					if (songProfiles.containsKey(song_id)) {
+						return songProfiles.get(song_id).total_play_count;
+					}
+					
+					
+					Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+
+					int totalPlayCount = 0;
+					while(sc.hasNextLine()) {
+						String line = sc.nextLine();
+						String[] parts = line.split("\t");
+
+						String songID = parts[0];
+						String userID = parts[1];
+						int timesPlayed = Integer.parseInt(parts[2]);
+
+						if(songID.equalsIgnoreCase(song_id)) {
+							totalPlayCount += timesPlayed;
+							breaker=1;
+						}
+					}
+					sc.close();
+					
+					
+					if(totalPlayCount==0) {
+						Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
+
+						// totalPlayCount = 0;
+						while(sc.hasNextLine()) {
+							String line = sc.nextLine();
+							String[] parts = line.split("\t");
+
+							String songID = parts[0];
+							
+							int timesPlayed = Integer.parseInt(parts[2]);
+
+							if(songID.equalsIgnoreCase(song_id)) {
+								totalPlayCount += timesPlayed;
+							}
+						}
+						sc2.close();
+						
+					}
+					return totalPlayCount;
+
 			
-			
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
-
-			int totalPlayCount = 0;
-			while(sc.hasNextLine()) {
-				String line = sc.nextLine();
-				String[] parts = line.split("\t");
-
-				String songID = parts[0];
-				String userID = parts[1];
-				int timesPlayed = Integer.parseInt(parts[2]);
-
-				if(songID.equalsIgnoreCase(song_id)) {
-					totalPlayCount += timesPlayed;
-				}
-			}
-			sc.close();
-			return totalPlayCount;
-			
-
 		}
 		catch(Exception e) {
 			System.out.println(new File(".").getAbsolutePath());
