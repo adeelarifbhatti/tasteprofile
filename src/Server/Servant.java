@@ -29,6 +29,7 @@ public class Servant extends ProfilerPOA {
 	HashMap<String, SongProfileImpl> songProfiles = new HashMap<>();
 	HashMap<String, UserProfileImpl> userProfiles = new HashMap<>();
 	HashMap<String,UserInfo> userInfo = new HashMap<>();
+	HashMap<String,UserInfo> userInfo2 = new HashMap<>();
 	ArrayList<UserInfo> top1000 = new ArrayList<>();
 
 	class UserInfo implements Comparable<UserInfo>{
@@ -52,7 +53,7 @@ public class Servant extends ProfilerPOA {
 	
 	public void topUsers() {
 	try {
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -86,9 +87,16 @@ public class Servant extends ProfilerPOA {
 				}
 			}
 			sc.close();
-
+			List<UserInfo> allInfo1 = new ArrayList<UserInfo>(userInfo.values());
+			Collections.sort(allInfo1);
 			
-			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
+			for(int i = 0; i< 40;i++) {
+				top1000.add(allInfo1.get(i));
+				userInfo2.put(top1000.get(i).UserID, top1000.get(i));
+				
+			}
+			
+			Scanner sc2 = new Scanner(new File("train_triplets_test2.txt"));
 			while(sc2.hasNextLine()) {
 				String line = sc2.nextLine();
 				String[] parts2 = line.split("\t");
@@ -99,10 +107,10 @@ public class Servant extends ProfilerPOA {
 				ArrayList<UserCounterImpl> users2;
 				ArrayList<SongCounterImpl> songs2;
 
-				if(userInfo.containsKey(userID2)) {
-					users2 = userInfo.get(userID2).listenedTime;
+				if(userInfo2.containsKey(userID2)) {
+					users2 = userInfo2.get(userID2).listenedTime;
 					userInfo.get(userID2).totalTimesPlayed += timesPlayed;
-					songs2 = userInfo.get(userID2).songsListenedTo;
+					songs2 = userInfo2.get(userID2).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID2,timesPlayed);
 					songs2.add(song);
 					System.out.println(userInfo.size()+" ########### Inside File 2  It contains USER_ID from file 1");
@@ -110,25 +118,17 @@ public class Servant extends ProfilerPOA {
 
 				}
 				else {
-					users2 = new ArrayList<>();
-					users2.add(new UserCounterImpl(userID2,timesPlayed));
-					UserInfo ui = new UserInfo();
-					songs2 = new ArrayList<>();
-					songs2.add(new SongCounterImpl(songID2,timesPlayed));
-					ui.UserID = userID2;
-					ui.totalTimesPlayed = timesPlayed;
-					ui.songsListenedTo=songs2;
-					userInfo.put(userID2,ui);
-					System.out.println(userInfo.size()+" Inside File 2 It Doesn't contain USER_ID from file 1");
+					
+					System.out.println(userInfo2.size()+" Inside File 2 It Doesn't contain USER_ID from file 1");
 				}
 			}
 			sc2.close();
 		
 			
-			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo.values());
+			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo2.values());
 			Collections.sort(allInfo);
 			
-			for(int i = 0; i< 1000;i++) {
+			for(int i = 0; i< 40;i++) {
 				top1000.add(allInfo.get(i));
 
 				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " 
