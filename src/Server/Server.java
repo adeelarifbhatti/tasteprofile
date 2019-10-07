@@ -20,7 +20,7 @@ public class Server {
 		     Servant servant = new Servant();
 		     // To disable the cache on server please comment the following two line		     
 		     servant.topUsers();
-		     servant.loadUserProfiles();
+		   //  servant.loadUserProfiles();
 		     // disabling songs profiles, it doesn't work for now
 		     //servant.loadSongProfiles();
 			 org.omg.CORBA.Object ref = rootpoa.servant_to_reference(servant); Profiler

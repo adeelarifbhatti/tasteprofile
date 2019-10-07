@@ -28,6 +28,7 @@ public class Servant extends ProfilerPOA {
 
 	HashMap<String, SongProfileImpl> songProfiles = new HashMap<>();
 	HashMap<String, UserProfileImpl> userProfiles = new HashMap<>();
+	HashMap<String,UserInfo> userInfo = new HashMap<>();
 	ArrayList<UserInfo> top1000 = new ArrayList<>();
 
 	class UserInfo implements Comparable<UserInfo>{
@@ -50,11 +51,7 @@ public class Servant extends ProfilerPOA {
 	}
 	
 	public void topUsers() {
-		HashMap<String,UserInfo> userInfo = new HashMap<>();
-		
-		
-		
-		try {
+	try {
 			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
@@ -64,18 +61,26 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 				ArrayList<UserCounterImpl> users;
+				ArrayList<SongCounterImpl> songs;
 
 				if(userInfo.containsKey(userID)) {
 					users = userInfo.get(userID).listenedTime;
 					userInfo.get(userID).totalTimesPlayed += timesPlayed;
+					songs = userInfo.get(userID).songsListenedTo;
+					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
+					songs.add(song);
+					
 
 				}
 				else {
 					users = new ArrayList<>();
 					users.add(new UserCounterImpl(userID,timesPlayed));
 					UserInfo ui = new UserInfo();
+					songs = new ArrayList<>();
+					songs.add(new SongCounterImpl(songID,timesPlayed));
 					ui.UserID = userID;
 					ui.totalTimesPlayed = timesPlayed;
+					ui.songsListenedTo=songs;
 					userInfo.put(userID,ui);
 				}
 			}
@@ -85,14 +90,42 @@ public class Servant extends ProfilerPOA {
 			
 			for(int i = 0; i< 1000;i++) {
 				top1000.add(allInfo.get(i));
-				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " +  top1000.get(i).totalTimesPlayed + "  " +  top1000.size());
+
+				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " 
+				+  top1000.get(i).songsListenedTo.get(0).song_id + "  " + top1000.get(i).songsListenedTo.get(0).songid_play_time);
 			}
+			
+			for(UserInfo ui : top1000) {
+				Collections.sort(ui.songsListenedTo);
+				SongCounterImpl[] top3 = null;
+				
+				if(ui.songsListenedTo.size() < 3) {
+					top3 = new SongCounterImpl[ui.songsListenedTo.size()];
+					for(int j = 0; j< ui.songsListenedTo.size();j++) {
+						top3[j] = ui.songsListenedTo.get(j);
+					}
+				}else {
+					SongCounterImpl[] tmp = {ui.songsListenedTo.get(0),ui.songsListenedTo.get(1),ui.songsListenedTo.get(2)};
+					top3 = tmp;
+				}
+				 
+				ArrayList<SongCounterImpl> songsListenedTo = ui.songsListenedTo;
+				SongCounterImpl[] item = songsListenedTo.toArray(new SongCounterImpl[songsListenedTo.size()]);
+				UserProfileImpl up = new UserProfileImpl(ui.UserID,ui.totalTimesPlayed,item,new TopThreeSongsImpl(top3));
+				userProfiles.put(ui.UserID,up);
+			}
+			System.out.println("USER IDs are "+top1000.get(0).UserID + " total timePlayed is  " 
+					+  top1000.get(0).songsListenedTo.get(0).song_id + "  " + top1000.get(0).songsListenedTo.size());
+			
+			
+			
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(top1000.size());
+		System.out.println(userProfiles.containsKey("902e550a0e7037a7740836fc9f7de14cf29b1ef3"));
 	}
 
 	public void loadUserProfiles() {
