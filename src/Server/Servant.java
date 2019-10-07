@@ -52,7 +52,7 @@ public class Servant extends ProfilerPOA {
 	
 	public void topUsers() {
 	try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
