@@ -150,7 +150,7 @@ public class Servant extends ProfilerPOA {
 				String topID = top1000.get(i).UserID;
 
 
-				if(songInfo.containsKey(topID) && userID.equals(topID)) {
+				if(songInfo.containsKey(topID) && userID.equalsIgnoreCase(topID)) {
 					System.out.println(i +" "+songInfo.containsKey(top1000.get(i).UserID)  + "  UserID is "+top1000.get(i).UserID +" And TotalTimePlayed is "+ top1000.get(i).totalTimesPlayed);
 					songs = songInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
@@ -161,8 +161,8 @@ public class Servant extends ProfilerPOA {
 					System.out.println(songInfo.size());
 
 				}
-				else if (userID.equals(topID) && !songInfo.containsKey(topID)) {
-					System.out.println(userID+" equals "+ topID + " "+ userID.equals(topID));
+				else if (userID.equalsIgnoreCase(topID) && !songInfo.containsKey(topID)) {
+					System.out.println(userID+" equals "+ topID + " "+ userID.equalsIgnoreCase(topID));
 					songs = new ArrayList<>();
 					songs.add(new SongCounterImpl(songID,timesPlayed));
 					UserInfo ui = new UserInfo();
@@ -171,7 +171,7 @@ public class Servant extends ProfilerPOA {
 					ui.totalTimesPlayed = timesPlayed;
 					songInfo.put(topID,ui);
 				}
-				else if (!userID.equals(topID)){
+				else if (!userID.equalsIgnoreCase(topID)){
 					System.out.println("##################### " + topID + " i= "+ i);
 				}
 			}
@@ -317,7 +317,7 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 
-				if(songID.equals(song_id)) {
+				if(songID.equalsIgnoreCase(song_id)) {
 					totalPlayCount += timesPlayed;
 				}
 			}
@@ -345,7 +345,7 @@ public class Servant extends ProfilerPOA {
 				
 				System.out.println("From Server Cache");
 				for(int i = 0; i < userProfiles.get(user_id).songs.length ; i++){
-					if(userProfiles.get(user_id).songs[i].song_id.equals(song_id)){
+					if(userProfiles.get(user_id).songs[i].song_id.equalsIgnoreCase(song_id)){
 						return userProfiles.get(user_id).songs[i].songid_play_time;
 						
 					}
@@ -364,7 +364,7 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 
-				if(songID.equals(song_id) && userID.equals(user_id)) {
+				if(songID.equalsIgnoreCase(song_id) && userID.equalsIgnoreCase(user_id)) {
 					System.out.println(songID + " " + userID + " " + timesPlayed );
 					playTimeByUser += timesPlayed;
 					
@@ -421,7 +421,7 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 
-				if(songID.equals(song_id)) {
+				if(songID.equalsIgnoreCase(song_id)) {
 					UserCounterImpl u = new UserCounterImpl(userID,timesPlayed);
 					users.add(u);
 				}
@@ -473,7 +473,7 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 
-				if(userID.equals(user_id)) {
+				if(userID.equalsIgnoreCase(user_id)) {
 					SongCounterImpl u = new SongCounterImpl(songID,timesPlayed);
 					songs.add(u);
 				}
