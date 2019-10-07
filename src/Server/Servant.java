@@ -52,7 +52,7 @@ public class Servant extends ProfilerPOA {
 	
 	public void topUsers() {
 	try {
-			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -69,6 +69,40 @@ public class Servant extends ProfilerPOA {
 					songs = userInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
 					songs.add(song);
+				}
+				else {
+					users = new ArrayList<>();
+					users.add(new UserCounterImpl(userID,timesPlayed));
+					UserInfo ui = new UserInfo();
+					songs = new ArrayList<>();
+					songs.add(new SongCounterImpl(songID,timesPlayed));
+					ui.UserID = userID;
+					ui.totalTimesPlayed = timesPlayed;
+					ui.songsListenedTo=songs;
+					userInfo.put(userID,ui);
+					
+				}
+			}
+
+			
+			Scanner sc2 = new Scanner(new File("train_triplets_test2.txt"));
+			while(sc2.hasNextLine()) {
+				String line = sc2.nextLine();
+				String[] parts = line.split("\t");
+
+				String songID = parts[0];
+				String userID = parts[1];
+				int timesPlayed = Integer.parseInt(parts[2]);
+				ArrayList<UserCounterImpl> users;
+				ArrayList<SongCounterImpl> songs;
+
+				if(userInfo.containsKey(userID)) {
+					users = userInfo.get(userID).listenedTime;
+					userInfo.get(userID).totalTimesPlayed += timesPlayed;
+					songs = userInfo.get(userID).songsListenedTo;
+					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
+					songs.add(song);
+					System.out.println("################################# Inside File 2  It contains USER_ID from file 1");
 					
 
 				}
@@ -82,8 +116,10 @@ public class Servant extends ProfilerPOA {
 					ui.totalTimesPlayed = timesPlayed;
 					ui.songsListenedTo=songs;
 					userInfo.put(userID,ui);
+					System.out.println("################################# Inside File 2 It Doesn't contain USER_ID from file 1");
 				}
 			}
+		
 			
 			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo.values());
 			Collections.sort(allInfo);
@@ -92,7 +128,7 @@ public class Servant extends ProfilerPOA {
 				top1000.add(allInfo.get(i));
 
 				System.out.println("USER IDs are "+top1000.get(i).UserID + " total timePlayed is  " 
-				+  top1000.get(i).songsListenedTo.get(0).song_id + "  " + top1000.get(i).songsListenedTo.get(0).songid_play_time);
+						 + "  " + top1000.get(i).totalTimesPlayed);
 			}
 			
 			for(UserInfo ui : top1000) {
@@ -115,12 +151,16 @@ public class Servant extends ProfilerPOA {
 				userProfiles.put(ui.UserID,up);
 			}
 			System.out.println("USER IDs are "+top1000.get(0).UserID + " total timePlayed is  " 
-					+  top1000.get(0).songsListenedTo.get(0).song_id + "  " + top1000.get(0).songsListenedTo.size());
+					+  top1000.get(0).songsListenedTo.get(0).song_id + "  " + top1000.get(0).totalTimesPlayed);
+			System.out.println("USER IDs are "+top1000.get(0).UserID + " total timePlayed is  " 
+					+  "SOMPBQG12AC3DF6169" + "  " + top1000.get(0).songsListenedTo.size());
 			
 			
 			
-			
+			sc.close();
+			sc2.close();
 		}
+
 		catch(Exception e) {
 			e.printStackTrace();
 		}
