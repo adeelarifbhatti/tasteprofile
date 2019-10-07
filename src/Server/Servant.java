@@ -32,6 +32,7 @@ public class Servant extends ProfilerPOA {
 	HashMap<String,UserInfo> userInfo2 = new HashMap<>();
 	ArrayList<UserInfo> top10000 = new ArrayList<>();
 	ArrayList<UserInfo> top1000 = new ArrayList<>();
+	UserCounterImpl u;
 
 	class UserInfo implements Comparable<UserInfo>{
 		String UserID;
@@ -96,6 +97,7 @@ public class Servant extends ProfilerPOA {
 				userInfo2.put(top10000.get(i).UserID, top10000.get(i));
 				
 			}
+			userInfo.clear();
 			
 			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
 			while(sc2.hasNextLine()) {
@@ -270,7 +272,7 @@ public class Servant extends ProfilerPOA {
 	public void loadSongProfiles() {
 		try {
 			HashMap<String,ArrayList<UserCounterImpl>> songListeners = new HashMap<String,ArrayList<UserCounterImpl>>();
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -279,7 +281,7 @@ public class Servant extends ProfilerPOA {
 				String userID = parts[1];
 				int timesPlayed = Integer.parseInt(parts[2]);
 
-				UserCounterImpl u = new UserCounterImpl(userID,timesPlayed);
+				 u = new UserCounterImpl(userID,timesPlayed);
 				ArrayList<UserCounterImpl> temp;
 				if(songListeners.containsKey(songID)){
 					temp = songListeners.get(songID);
@@ -316,8 +318,56 @@ public class Servant extends ProfilerPOA {
 				SongProfileImpl sp = new SongProfileImpl(totalPlayTime,top);
 				songProfiles.put(entry.getKey(), sp);
 			}
-			System.out.println("SongsProfiles are ready");
+			System.out.println("SongsProfiles are ready from file 1");
 			sc.close();
+			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
+			while(sc2.hasNextLine()) {
+				String line = sc2.nextLine();
+				String[] parts = line.split("\t");
+
+				String songID = parts[0];
+				String userID = parts[1];
+				int timesPlayed = Integer.parseInt(parts[2]);
+
+				u = new UserCounterImpl(userID,timesPlayed);
+				ArrayList<UserCounterImpl> temp;
+				if(songListeners.containsKey(songID)){
+					temp = songListeners.get(songID);
+					temp.add(u);
+					songListeners.replace(songID,temp);
+				}else {
+					temp = new ArrayList<UserCounterImpl>();
+					temp.add(u);
+					songListeners.put(songID, temp);
+				}
+			}
+			for (Entry<String, ArrayList<UserCounterImpl>> entry : songListeners.entrySet()) {
+
+				int totalPlayTime = 0;
+				ArrayList<UserCounterImpl> uCounters = songListeners.get(entry.getKey());
+				for(UserCounter u : uCounters) {
+					totalPlayTime += u.songid_play_time;
+				}
+
+				Collections.sort(uCounters);
+
+				TopThreeUsersImpl top;
+				if(uCounters.size() > 3) {
+					UserCounterImpl[] t = {uCounters.get(0),uCounters.get(1),uCounters.get(2)};
+					top = new TopThreeUsersImpl(t);
+				}else {
+					UserCounterImpl[] t = new UserCounterImpl[uCounters.size()];
+					for(int i = 0; i < uCounters.size(); i++) {
+						t[i] = uCounters.get(i);
+					}
+					top = new TopThreeUsersImpl(t);
+				}
+
+				SongProfileImpl sp = new SongProfileImpl(totalPlayTime,top);
+				songProfiles.put(entry.getKey(), sp);
+			}
+			System.out.println("SongsProfiles are ready from file 2");
+			sc2.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
