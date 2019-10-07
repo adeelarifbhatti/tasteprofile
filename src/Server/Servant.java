@@ -52,7 +52,7 @@ public class Servant extends ProfilerPOA {
 	
 	public void topUsers() {
 	try {
-			Scanner sc = new Scanner(new File("train_triplets_test.txt"));
+			Scanner sc = new Scanner(new File("train_triplets_1.txt"));
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] parts = line.split("\t");
@@ -69,6 +69,7 @@ public class Servant extends ProfilerPOA {
 					songs = userInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
 					songs.add(song);
+					System.out.println("Entry exists in hashmap, UserInfo Size is " +userInfo.size());
 				}
 				else {
 					users = new ArrayList<>();
@@ -80,12 +81,14 @@ public class Servant extends ProfilerPOA {
 					ui.totalTimesPlayed = timesPlayed;
 					ui.songsListenedTo=songs;
 					userInfo.put(userID,ui);
+					System.out.println("Creating new entry, UserInfo Size is " +userInfo.size());
 					
 				}
 			}
+			sc.close();
 
 			
-			Scanner sc2 = new Scanner(new File("train_triplets_test2.txt"));
+			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
 			while(sc2.hasNextLine()) {
 				String line = sc2.nextLine();
 				String[] parts = line.split("\t");
@@ -102,7 +105,7 @@ public class Servant extends ProfilerPOA {
 					songs = userInfo.get(userID).songsListenedTo;
 					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
 					songs.add(song);
-					System.out.println("################################# Inside File 2  It contains USER_ID from file 1");
+					System.out.println(userInfo.size()+" ########### Inside File 2  It contains USER_ID from file 1");
 					
 
 				}
@@ -116,9 +119,10 @@ public class Servant extends ProfilerPOA {
 					ui.totalTimesPlayed = timesPlayed;
 					ui.songsListenedTo=songs;
 					userInfo.put(userID,ui);
-					System.out.println("################################# Inside File 2 It Doesn't contain USER_ID from file 1");
+					System.out.println(userInfo.size()+" Inside File 2 It Doesn't contain USER_ID from file 1");
 				}
 			}
+			sc2.close();
 		
 			
 			List<UserInfo> allInfo = new ArrayList<UserInfo>(userInfo.values());
@@ -154,11 +158,7 @@ public class Servant extends ProfilerPOA {
 					+  top1000.get(0).songsListenedTo.get(0).song_id + "  " + top1000.get(0).totalTimesPlayed);
 			System.out.println("USER IDs are "+top1000.get(0).UserID + " total timePlayed is  " 
 					+  "SOMPBQG12AC3DF6169" + "  " + top1000.get(0).songsListenedTo.size());
-			
-			
-			
-			sc.close();
-			sc2.close();
+
 		}
 
 		catch(Exception e) {
