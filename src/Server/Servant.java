@@ -91,34 +91,34 @@ public class Servant extends ProfilerPOA {
 			Scanner sc2 = new Scanner(new File("train_triplets_2.txt"));
 			while(sc2.hasNextLine()) {
 				String line = sc2.nextLine();
-				String[] parts = line.split("\t");
+				String[] parts2 = line.split("\t");
 
-				String songID = parts[0];
-				String userID = parts[1];
-				int timesPlayed = Integer.parseInt(parts[2]);
-				ArrayList<UserCounterImpl> users;
-				ArrayList<SongCounterImpl> songs;
+				String songID2 = parts2[0];
+				String userID2 = parts2[1];
+				int timesPlayed = Integer.parseInt(parts2[2]);
+				ArrayList<UserCounterImpl> users2;
+				ArrayList<SongCounterImpl> songs2;
 
-				if(userInfo.containsKey(userID)) {
-					users = userInfo.get(userID).listenedTime;
-					userInfo.get(userID).totalTimesPlayed += timesPlayed;
-					songs = userInfo.get(userID).songsListenedTo;
-					SongCounterImpl song = new SongCounterImpl(songID,timesPlayed);
-					songs.add(song);
+				if(userInfo.containsKey(userID2)) {
+					users2 = userInfo.get(userID2).listenedTime;
+					userInfo.get(userID2).totalTimesPlayed += timesPlayed;
+					songs2 = userInfo.get(userID2).songsListenedTo;
+					SongCounterImpl song = new SongCounterImpl(songID2,timesPlayed);
+					songs2.add(song);
 					System.out.println(userInfo.size()+" ########### Inside File 2  It contains USER_ID from file 1");
 					
 
 				}
 				else {
-					users = new ArrayList<>();
-					users.add(new UserCounterImpl(userID,timesPlayed));
+					users2 = new ArrayList<>();
+					users2.add(new UserCounterImpl(userID2,timesPlayed));
 					UserInfo ui = new UserInfo();
-					songs = new ArrayList<>();
-					songs.add(new SongCounterImpl(songID,timesPlayed));
-					ui.UserID = userID;
+					songs2 = new ArrayList<>();
+					songs2.add(new SongCounterImpl(songID2,timesPlayed));
+					ui.UserID = userID2;
 					ui.totalTimesPlayed = timesPlayed;
-					ui.songsListenedTo=songs;
-					userInfo.put(userID,ui);
+					ui.songsListenedTo=songs2;
+					userInfo.put(userID2,ui);
 					System.out.println(userInfo.size()+" Inside File 2 It Doesn't contain USER_ID from file 1");
 				}
 			}
