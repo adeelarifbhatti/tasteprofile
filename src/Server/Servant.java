@@ -24,28 +24,10 @@ import TasteProfile.TopThreeSongs;
 import TasteProfile.TopThreeUsers;
 import TasteProfile.UserCounter;
 import TasteProfile.UserProfile;
-
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
-import java.util.Scanner;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Scanner;
+
 
 
 public class Servant extends ProfilerPOA {
@@ -247,6 +229,7 @@ public class Servant extends ProfilerPOA {
 					songListeners.put(songID, temp);
 				}
 			}
+			sc.close();
 
 			for (Entry<String, ArrayList<UserCounterImpl>> entry : songListeners.entrySet()) {
 
@@ -289,6 +272,7 @@ public class Servant extends ProfilerPOA {
 	}
 	@Override
 	public int getTimesPlayed(String song_id) {
+		serverPause();
 		System.out.println("METHOD: GetTimesPlayed(song_id)");
 		int totalPlays = 0;
 		try {
@@ -309,7 +293,7 @@ public class Servant extends ProfilerPOA {
 
 	public int getTimesPlayedHelper(String song_id) {
 		try {
-			serverPause();
+			
 			int totalPlayCount = 0;
 			boolean startSongBlock = false;
 			boolean endSongBlock = false;
@@ -437,6 +421,7 @@ public class Servant extends ProfilerPOA {
 
 	@Override
 	public int getTimesPlayedByUser(String user_id, String song_id) {
+		serverPause();
 		System.out.println("METHOD: GetTimesPlayedByUser(user_id,song_id)");
 		int timesPlayedByUser = 0;
 		try {
@@ -607,7 +592,6 @@ public class Servant extends ProfilerPOA {
 	}
 
 	public TopThreeSongs getTopThreeSongsByUserHelper(String user_id) {
-		serverPause();
 		TopThreeSongs topThree = null;
 		try {
 			Scanner sc;

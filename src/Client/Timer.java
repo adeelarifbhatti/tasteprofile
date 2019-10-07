@@ -17,7 +17,7 @@ public class Timer {
 	long finish = System.nanoTime();
 
 	public long timing() {
-    	long totalTime=(start-finish)/1000000;
+    	long totalTime=(finish-start)/1000000;
     	return totalTime;
 	}
 

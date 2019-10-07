@@ -63,13 +63,7 @@ public class InputFile {
 							}
 							  						
 					   }
-					   if(hit==0) {
-						   Timer time=new Timer();
-						 	time.setStart(System.nanoTime());
-						   time.setFinish(System.nanoTime());
-						    OutputFile.Writer_UserPlayed(method, argument2, argument1, 0, time.timing());
-					   }
-						
+					
 
 				   }
 					  

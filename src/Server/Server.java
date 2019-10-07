@@ -19,7 +19,7 @@ public class Server {
 
 		     Servant servant = new Servant();
 		     servant.loadUserProfiles();
-		   
+		     servant.loadSongProfiles();
 		     // To disable the cache on server please comment the following two line		     
 		   //  servant.topUsers();
 		   //  servant.loadUserProfiles();
